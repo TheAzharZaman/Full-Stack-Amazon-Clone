@@ -1,0 +1,34 @@
+.slider {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.slider img {
+  width: 100%;
+}
+
+.slider__controller {
+  position: absolute !important;
+  top: 30%;
+}
+
+.slider__controllerBack {
+  left: 2.5rem;
+}
+
+.slider__controllerForw {
+  right: 2.5rem;
+}
+
+.slider__arrows {
+  height: 53px;
+}
+
+.slider__fade {
+  height: 56vh;
+  width: 100%;
+  position: absolute;
+  bottom: 0rem;
+  z-index: 11;
+  background-image: linear-gradient(transparent, rgb(224, 224, 224));
+}

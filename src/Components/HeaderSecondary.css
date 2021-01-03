@@ -1,0 +1,11 @@
+.headerSecondary {
+  background-color: #232f3e;
+  padding: 8px 1rem 13px;
+  margin-top: 60px;
+}
+
+.headerSecondary > .headerSecondary__left > a {
+  color: white !important;
+  font-size: 14px;
+  margin-right: 1rem;
+}

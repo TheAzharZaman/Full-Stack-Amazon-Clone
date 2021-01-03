@@ -1,0 +1,24 @@
+@font-face {
+  src: url(./Fonts/AmazonEmber_Lt.ttf);
+  font-family: AmazonEmber300;
+}
+
+@font-face {
+  src: url(./Fonts/AmazonEmber_Rg.ttf);
+  font-family: AmazonEmber400;
+}
+
+@font-face {
+  src: url(./Fonts/Amazon-Ember-Medium.ttf);
+  font-family: AmazonEmber500;
+}
+
+@font-face {
+  src: url(./Fonts/AmazonEmber_He.ttf);
+  font-family: AmazonEmber600;
+}
+
+@font-face {
+  src: url(./Fonts/AmazonEmber_Bd.ttf);
+  font-family: AmazonEmber700;
+}

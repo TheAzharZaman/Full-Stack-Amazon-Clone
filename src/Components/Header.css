@@ -1,0 +1,331 @@
+.header {
+  width: 100%;
+  background-color: #131921;
+  padding: 0.15rem 0.5rem;
+  color: white;
+  position: fixed;
+  top: 0;
+  z-index: 111111;
+  height: 55px;
+}
+
+/* Header Logo Section */
+
+.header__logo {
+  border-radius: 3px;
+  width: 65%;
+  padding: 9px 8px 2px;
+  border: 1.75px solid #131921;
+}
+
+.header__logo:hover {
+  border: 1.75px solid #fff;
+}
+
+.header__logo > img {
+  width: 96.5px;
+}
+
+.header__delivery {
+  text-align: center;
+  margin-left: 0.65rem;
+  padding: 5px 7px 5px 4px;
+  border-radius: 3.5px;
+  border: 1.75px solid #131921;
+}
+
+.header__delivery:hover {
+  border: 1.75px solid #fff;
+}
+
+.header__delivery svg {
+  font-size: 21px;
+}
+
+.locationIcon {
+  margin-right: 0.15rem;
+  margin-top: 0.6rem;
+}
+
+/* Header Options */
+
+.headerNav__optionLineOne {
+  font-size: 12px;
+  font-family: AmazonEmber300;
+}
+
+.headerNav__optionLineOne.signIn {
+  font-size: 11px;
+}
+
+.headerNav__optionLineTwo {
+  font-size: 14px;
+  font-family: AmazonEmber700;
+  letter-spacing: 0.3px;
+}
+
+.headerNav__optionLineTwo svg {
+  font-size: 16px;
+  margin-top: 0.16rem;
+}
+
+/* Search Bar */
+
+.header__search {
+  flex: 0.72;
+  background-color: antiquewhite;
+  height: 40px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Header Search List */
+
+.headerSearch__listOpener {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  background-color: #e9e9e9;
+  height: 100%;
+  padding: 0 1.25px 0 6.5px;
+}
+
+.headerSearch__listOpener:hover {
+  background-color: #dfdfdf;
+}
+
+.headerSearch__listOpener > span {
+  font-size: 14px;
+  color: #464646;
+  font-weight: 300;
+}
+
+.headerSearch__listOpener svg {
+  color: #808080;
+}
+
+.dropDown {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid #ccc;
+  width: 210px;
+  height: 400px;
+  overflow: auto;
+  position: absolute;
+  top: 3rem;
+  left: 16%;
+  display: flex;
+  flex-direction: column;
+  color: #131921;
+}
+
+.dropDown span {
+  font-size: 14.5px;
+  margin-bottom: 3px;
+  padding: 1px 3px;
+  cursor: pointer;
+}
+
+.dropDown span:hover {
+  color: white;
+  background-color: rgb(38, 138, 231);
+}
+
+/*  */
+
+.header__search > input {
+  flex: 1;
+  height: 38px;
+  outline-width: 0;
+  border: none;
+  padding: 0 0.5rem;
+  font-size: 16px;
+}
+
+.header__searchBarActive {
+  border: 3px solid #ff9b18;
+}
+
+/* Header Search Icon */
+
+.header__search > .searchIcon {
+  background-color: #f3a847;
+  padding: 0 0.5rem;
+}
+
+.header__search > .searchIcon:hover {
+  background-color: #f0a037;
+}
+
+.header__search > .searchIcon > svg {
+  font-size: 27px;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  color: #131921;
+}
+
+/* Nav Bar */
+
+.header__nav {
+  flex: 0.25;
+  padding: 0;
+  margin: 0 0.55rem;
+}
+
+.headerNav__option {
+  margin-left: -0.1rem;
+}
+
+.headerNav__languages {
+  cursor: pointer;
+  align-items: center;
+  border: 1.75px solid #131921;
+  padding: 17px 2.5px 2.5px;
+  border-radius: 2px;
+  margin-left: -0.5rem;
+}
+
+.headerNav__languages:hover {
+  border: 1.75px solid #fff;
+}
+
+.headerNav__languages svg {
+  font-size: 13.5px;
+}
+
+.headerNav__languages img {
+  width: 20px;
+  margin-right: 4.5px;
+}
+
+.headerNav__loginOption {
+  color: white;
+}
+
+.signInArrow {
+  font-size: 12px;
+}
+
+.headerNav__basket {
+  align-items: center;
+  margin-right: 0.5rem;
+  border: 1.75px solid #131921;
+  padding: 5px 0 5px 7.5px;
+  border-radius: 2px;
+}
+
+.headerNav__basket > svg {
+  color: white;
+}
+
+.headerNav__basket:hover {
+  border: 1.75px solid #fff;
+}
+
+.headerNav__basket > span {
+  font-size: 15px;
+  margin: 0 10px;
+  color: #f07d17;
+}
+
+/*  */
+
+.marginNeg {
+  margin-bottom: -0.25rem;
+}
+
+.borderOnHover {
+  border: 1.75px solid #131921;
+  padding: 5px 3.5px;
+  border-radius: 2px;
+}
+
+.borderOnHover:hover {
+  border: 1.75px solid #fff;
+}
+
+/* Login Drop Down */
+
+.loginDropDown {
+  background-color: white;
+  position: absolute;
+  border: 1px solid #ccc;
+  top: 4rem;
+  right: 4.5rem;
+  color: #131921;
+  width: 375px;
+  height: 290px;
+  align-items: center;
+  padding: 1rem;
+}
+
+.loginDropDown > .loginDropDown__top {
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 0.5rem;
+  width: 90%;
+}
+
+.loginDropDown__top > a > button {
+  background-color: #f1c657;
+  border-radius: 2px;
+  height: 30px;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+  width: 12.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.loginDropDown__top > a > button:hover {
+  background-color: #f0c14b;
+}
+
+.newCustomer__text {
+  font-size: 13px;
+  margin-right: 0.25rem;
+}
+
+.loginDropDown__top > div > .redirectLink {
+  font-size: 13px;
+}
+
+.loginDropDown > .loginDropDown__bottom {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.loginDropDown__bottomLeft {
+  width: 50%;
+  padding-left: 1rem;
+  border-right: 1px solid lightgray;
+}
+
+.loginDropDown__bottomRight {
+  width: 50%;
+  padding-left: 1.5rem;
+}
+
+.loginDropDown__bottomLeft > h3 {
+  font-size: 17px;
+}
+
+.loginDropDown__bottomRight > h3 {
+  font-size: 17px;
+}
+
+.loginDropDown__bottomLeft > a,
+.loginDropDown__bottomRight > a {
+  margin-top: 0.4rem;
+  font-size: 14px;
+  color: #111;
+}
+
+.loginDropDown__bottomLeft > a:hover,
+.loginDropDown__bottomRight > a:hover {
+  text-decoration: underline;
+  color: #cd6438;
+  text-decoration-color: #cd6438;
+}

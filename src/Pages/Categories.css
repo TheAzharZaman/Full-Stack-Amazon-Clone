@@ -1,0 +1,129 @@
+.categories__row {
+  margin-left: 3.5rem;
+  width: 93%;
+}
+
+.categories__row1 {
+  z-index: 1111;
+  position: absolute;
+  top: 50%;
+  width: 93%;
+}
+
+.categories__row2 {
+  margin-top: 8rem;
+  width: 94.25%;
+}
+
+.categories__row3 {
+  margin-top: 2.7rem;
+  width: 94.25%;
+}
+
+.categories__row4 {
+  margin-top: 2.7rem;
+  width: 94.25%;
+}
+
+.category {
+  width: 21.5%;
+  background-color: white;
+  padding: 1rem 1.3rem;
+  margin-right: 1rem;
+}
+
+.categoty__title {
+  margin-top: 0.5rem;
+  font-size: 20px;
+}
+
+.category__image {
+  width: 100%;
+  height: 19.75rem;
+  margin-top: 0.52rem;
+  margin-bottom: 0.525rem;
+  background-size: cover;
+}
+
+.redirectLink {
+  font-size: 13.5px;
+  color: #00b8ec;
+}
+
+.redirectLink:hover {
+  text-decoration: underline;
+  color: #cd6438;
+  text-decoration-color: #cd6438;
+}
+
+.signin__promotion {
+  width: 23%;
+  text-align: center;
+}
+
+.signin {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 7rem;
+}
+
+.signin > h3 {
+  font-size: 21px;
+  margin: 1rem 0.5rem;
+}
+
+.signin > a > button {
+  padding: 8px 1rem;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #f2cb69;
+  outline: none;
+  border: 1px solid rgb(139, 139, 139);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signin > button:hover {
+  background-color: #e7bb4a;
+}
+
+.promotion {
+  width: 94%;
+  height: 16.5rem;
+  background-size: cover;
+  margin: 1.55rem auto 0;
+  cursor: pointer;
+}
+
+/* Category with Blocks Styling */
+
+.categoryBlocks__row1,
+.categoryBlocks__row2 {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.categoryBlocks__row2 {
+  margin-bottom: 2.25rem;
+}
+
+.categoryBlocks__blocks {
+  margin-top: 0.8rem;
+}
+
+.category__block {
+  width: 50%;
+  margin: 0 4px;
+}
+
+.category__block > h5 {
+  font-size: 12.25px;
+  font-weight: 300;
+}
+
+.blockImage__div {
+  width: 95%;
+  height: 7.2rem;
+  background-size: cover;
+  background-color: aqua;
+}

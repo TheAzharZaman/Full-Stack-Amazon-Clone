@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: AmazonEmber400;
+}
+
+body {
+  background-color: #eaeded;
+}
+
+img {
+  object-fit: contain;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.evenly {
+  justify-content: space-evenly;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.center {
+  align-items: center;
+}
+
+.pointer {
+  cursor: pointer;
+}

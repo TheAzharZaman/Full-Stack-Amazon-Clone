@@ -1,0 +1,138 @@
+.shopingCart {
+  height: max-content;
+  padding: 20px 20px 50px;
+}
+
+.shopingCart__left {
+  width: 70%;
+}
+
+.shopingCart__left > .shopingCart__tagline {
+  margin-right: 10px;
+  padding: 0 10px 10px;
+  font-size: 25px;
+  font-weight: 600;
+  color: rgb(46, 46, 46);
+}
+
+.shopingCart__emptyTagline {
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+}
+
+.shopingCart__emptyReturnBox {
+  border: 1px solid lightgray;
+  margin-top: 2.5rem;
+  padding: 1rem 1rem 0;
+  width: 40%;
+  border-radius: 3px;
+  background-color: #f3f3f3;
+}
+
+.shopingCart__emptyReturnBox > h5 {
+  font-size: 17px;
+  color: rgb(77, 76, 76);
+}
+
+.shopingCart__emptyReturnBox > a > svg {
+  font-size: 25px;
+  color: #253447;
+  margin-top: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtotal {
+  width: 300px;
+  height: 100px;
+  padding: 20px;
+  background-color: #f3f3f3;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-top: 2.85rem;
+  margin-left: 1.1rem;
+  position: sticky;
+  top: 4.5rem;
+}
+
+.subtotal__info > strong {
+  margin-left: 0.5rem;
+}
+
+.subtotal__gift {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.subtotal__gift > input {
+  margin-right: 0.25rem;
+}
+
+.subtotal > a > button {
+  background-color: #f1c657;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+}
+
+.subtotal > a > button:hover {
+  background-color: #f0c14b;
+}
+
+/* Shoping Cart Products Styling */
+
+.shopingCart__productsList {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.shopingCart__product {
+  padding: 0.75rem 1rem;
+  margin-top: 0.15rem;
+  border-top: 1px solid rgb(221, 221, 221);
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  margin-right: 20px;
+  background-color: white;
+}
+
+.shopingCart__productInfo {
+  margin-left: 2rem;
+}
+
+.shopingCart__productImage {
+  width: 25%;
+}
+.shopingCart__productTitle {
+  margin-top: 5.5%;
+  color: #111;
+}
+.shopingCart__productPrice {
+  color: #cc6aba;
+  margin-top: 0.7rem;
+}
+.shopingCart__productRating {
+  margin-top: 0.65rem;
+  cursor: pointer;
+}
+.shopingCart__productButton {
+  margin-top: 2.5rem;
+  background-color: #f1c657;
+  border-radius: 2px;
+  width: 30%;
+  height: 30px;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+  outline-color: #be9325;
+}
+
+.shopingCart__productButton:hover {
+  background-color: #f0c14b;
+}
