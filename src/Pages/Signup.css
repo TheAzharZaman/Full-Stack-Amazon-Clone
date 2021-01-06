@@ -1,0 +1,145 @@
+.signup {
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.signup__contentCont {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.signup__logo {
+  width: 130px;
+}
+
+.signup__form {
+  background-color: white;
+  border: 1px solid rgb(218, 218, 218);
+  width: 310px;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  margin-top: 0.1rem;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup__form > h3 {
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.signup__form > .form__input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.95rem;
+  width: 100%;
+}
+
+.form__input > label {
+  font-size: 13.25px;
+  font-family: AmazonEmber700;
+  margin-bottom: 3px;
+  margin-left: 3px;
+  color: rgb(46, 46, 46);
+}
+
+.form__input > input {
+  height: 26px;
+  font-size: 13px;
+  padding: 0 5px;
+  outline-width: 0;
+  border: 1.5px solid rgb(151, 151, 151);
+  border-radius: 3px;
+}
+
+.signupPassword__tip {
+  font-size: 12.5px;
+  font-weight: 300;
+  color: rgb(63, 63, 63);
+  margin-top: 5px;
+  margin-left: 3px;
+}
+
+.signup__submit {
+  width: 100%;
+  height: 32px;
+  margin: 0 auto;
+  background-color: #f5d072;
+  outline: none;
+  border: 1px solid rgb(139, 139, 139);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.signup__submit:hover {
+  background-color: #f1c860;
+}
+
+.signup__submit:disabled {
+  background-color: #eff1f3;
+  border: 1px solid rgb(139, 139, 139);
+  color: rgb(44, 44, 44);
+}
+
+.signup__termsTagline {
+  font-size: 13px;
+  margin-top: 1.35rem;
+}
+
+.signup__termsLinks {
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 300;
+}
+
+.signup__termsLinks > a {
+  color: #0066c0;
+  font-weight: 300;
+  margin: 0 4px;
+}
+
+.signup__termsLinks > a:hover {
+  text-decoration: underline;
+  color: #cd6438;
+  text-decoration-color: #cd6438;
+}
+
+.signup__termsLinks > a:nth-child(1) {
+  margin: 0 4px 0 0;
+}
+
+.signup__termsLinks > a:nth-child(2) {
+  margin: 0 0 0 4px;
+}
+
+.signup__haveanAccount {
+  font-size: 13px;
+  margin-top: 2rem;
+  font-weight: 300;
+}
+
+.signup__haveanAccount > a {
+  color: #0066c0;
+  font-weight: 300;
+  margin: 0 4px;
+}
+
+.signup__haveanAccount > a:hover {
+  text-decoration: underline;
+  color: #cd6438;
+  text-decoration-color: #cd6438;
+}
+
+.box--shadow {
+  height: 2px;
+  box-shadow: 0px 1.5px 4.5px 0px rgba(0, 0, 0, 0.2);
+  width: 60%;
+  margin-top: 2rem;
+}

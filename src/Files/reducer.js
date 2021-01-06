@@ -2,6 +2,7 @@
 
 const initialState = {
   basket: [],
+  currentUser: null,
 };
 
 const basketTotal = (basket) => {
@@ -38,6 +39,12 @@ const reducer = (state, action) => {
 
     default:
       return state;
+
+    // case "REMOVE_FROM_BASKET":
+    //   return {
+    //     ...state,
+    //     currentUser: action.user,
+    //   }
   }
 };
 

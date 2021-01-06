@@ -83,8 +83,8 @@
   cursor: pointer;
 }
 
-.signin > button:hover {
-  background-color: #e7bb4a;
+.signin > a > button:hover {
+  background-color: #ebc055;
 }
 
 .promotion {

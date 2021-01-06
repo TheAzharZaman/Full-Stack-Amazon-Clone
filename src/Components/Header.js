@@ -120,19 +120,24 @@ const Header = () => {
 };
 
 const LoginDropDown = () => {
+  const [{ currentUser }, dispatch] = useStateValue();
+
   return (
     <div className="loginDropDown flexColumn">
-      <div className="loginDropDown__top flexColumn">
-        <Link to="login">
-          <button>Sign in</button>
-        </Link>
-        <div className="flexRow">
-          <p className="newCustomer__text">New customer?</p>
-          <Link to="/signup" className="redirectLink">
-            Start here
+      {!currentUser && (
+        <div className="loginDropDown__top flexColumn">
+          <Link to="user_authentication">
+            <button>Sign in</button>
           </Link>
+          <div className="flexRow">
+            <p className="newCustomer__text">New customer?</p>
+            <Link to="/user_registration" className="redirectLink">
+              Start here
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="loginDropDown__bottom flexRow">
         <div className="loginDropDown__bottomLeft flexColumn">
           <h3>Your lists</h3>

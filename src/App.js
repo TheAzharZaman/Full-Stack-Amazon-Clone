@@ -13,22 +13,26 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        <Header />
-        <HeaderSecondary />
         <Switch>
-          <Route path="/signup">
+          <Route path="/user_registration">
             <Signup />
           </Route>
-          <Route path="/login">
+          <Route path="/user_authentication">
             <Login />
           </Route>
           <Route path="/checkout">
+            <Header />
+            <HeaderSecondary />
             <Checkout />
           </Route>
           <Route path="/cart">
+            <Header />
+            <HeaderSecondary />
             <ShopingCart />
           </Route>
           <Route path="/">
+            <Header />
+            <HeaderSecondary />
             <Homepage />
           </Route>
         </Switch>
