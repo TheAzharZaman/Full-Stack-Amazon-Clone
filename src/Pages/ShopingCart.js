@@ -5,15 +5,28 @@ import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
+import { db } from "../Files/firebase";
 
 const ShopingCart = () => {
+  const [{ basket, currentUser }, dispatch] = useStateValue();
   const [sortedBasket, setSortedBasket] = React.useState([]);
-  const [{ basket }, dispatch] = useStateValue();
+  const [fetchedData, setFetchedData] = useState({});
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
 
   useEffect(() => {
     const sortBasket = () => {
       return basket.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
     };
+
+    const fetchDataFromDB = () => {
+      const docRef = db.collection("users").doc(userID);
+
+      docRef.get().then((doc) => {
+        setFetchedData(doc.data());
+      });
+    };
+
+    fetchDataFromDB();
 
     setSortedBasket(sortBasket);
   }, [basket]);
@@ -25,7 +38,7 @@ const ShopingCart = () => {
           {basket.length < 1 && (
             <div>
               <span class="shopingCart__emptyTagline">
-                Your Shoping Basket is Empty
+                {fetchedData?.displayName} Your Shoping Basket is Empty
               </span>
               <div className="shopingCart__emptyReturnBox">
                 <h5>Please return to products page to select something</h5>
@@ -35,7 +48,9 @@ const ShopingCart = () => {
               </div>
             </div>
           )}
-          {basket.length > 0 && <span>Your Shoping Basket</span>}
+          {basket.length > 0 && (
+            <span>{fetchedData?.displayName} Your Shoping Basket</span>
+          )}
           {/* <h3>Your Shoping basket</h3> */}
         </div>
         <div className="shopingCart__productsList">

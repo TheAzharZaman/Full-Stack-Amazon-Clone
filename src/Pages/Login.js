@@ -1,25 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import Logo from "./logo.png";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import AuthFooter from "../Components/AuthFooter";
+import { auth } from "../Files/firebase";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const history = useHistory();
+
+  const signupHandler = async (e) => {
+    e.preventDefault();
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((authObj) => {
+        if (authObj) {
+          history.push("/");
+        }
+      })
+      .catch((err) => alert(err.message));
+  };
+
   return (
     <div className="login">
       <div className="login__contentCont">
         <Link to="/">
           <img className="login__logo" src={Logo} />
         </Link>
-        <form className="login__form">
+        <form onSubmit={signupHandler} className="login__form">
           <h3>Sign In</h3>
           <div className="loginForm__input">
             <label>Email</label>
-            <input placeholder="Your registered email address" type="text" />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your registered email address"
+              type="text"
+            />
           </div>
           <div className="loginForm__input">
             <label>Password</label>
-            <input placeholder="Your account password" type="password" />
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Your account password"
+              type="password"
+            />
           </div>
 
           <input className="signup__submit" type="submit" value="Sign In" />

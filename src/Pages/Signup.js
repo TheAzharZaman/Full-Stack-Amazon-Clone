@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import "./Signup.css";
 import Logo from "./logo.png";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import AuthFooter from "../Components/AuthFooter";
-import { auth } from "../Files/firebase";
-import { AssignmentLateRounded, RecentActorsRounded } from "@material-ui/icons";
+import { auth, db } from "../Files/firebase";
+import useStateValue from "../Files/StateProvider";
 
 const Signup = () => {
+  const [{ currentUser }, dispatch] = useStateValue();
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const history = useHistory();
 
   React.useEffect(() => {
     if (
@@ -27,16 +31,27 @@ const Signup = () => {
     }
   }, [password, passwordConfirmValue]);
 
-  // const signupHandler = async (e) => {
-  //   e.preventDefault();
-  //   auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((userObj) => {
-  //       console.log(userObj);
-  //     })
-  //     .catch((error) => alert(error.message));
-  //   // .catch((error) => console.log(error.message));
-  // };
+  const signupHandler = (e) => {
+    e.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userObj) => {
+        console.log(userObj);
+        db.collection("users").doc(userObj?.user.uid).set({
+          userID: userObj?.user.uid,
+          displayName: displayName,
+          email: email,
+          accountPassword: password,
+        });
+        localStorage.setItem("displayName", displayName);
+
+        if (userObj) {
+          history.push("/");
+        }
+      })
+      .catch((error) => alert(error.message));
+  };
 
   return (
     <div className="signup">
@@ -44,7 +59,7 @@ const Signup = () => {
         <Link to="/">
           <img className="signup__logo" src={Logo} />
         </Link>
-        <form className="signup__form">
+        <form onSubmit={signupHandler} className="signup__form">
           <h3>Create account</h3>
           <div className="form__input">
             <label>Your name</label>

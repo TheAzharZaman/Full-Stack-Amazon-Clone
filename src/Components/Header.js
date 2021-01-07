@@ -12,14 +12,17 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Dropdown from "./Dropdown";
 import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
+import { auth, db } from "../Files/firebase";
 
 const Header = () => {
+  const [{ basket, currentUser }, dispatch] = useStateValue();
   const [vistorsDetails, setVisitorsDetails] = useState(null);
   const [listCurrentValue, setListCurrentValue] = useState("All");
   const [show, setShow] = useState(false);
   const [showLoginDropDown, setShowLoginDropDown] = useState(false);
-
-  const [{ basket }, dispatch] = useStateValue();
+  const [fetchedData, setFetchedData] = useState({});
+  const [displayName, setDisplayName] = useState("Guest");
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
 
   useEffect(() => {
     const API_CALL_URL =
@@ -34,13 +37,21 @@ const Header = () => {
         });
     };
     getUserGeoLocationDetails();
+
+    const fetchDataFromDB = () => {
+      const docRef = db.collection("users").doc(userID);
+
+      docRef.get().then((doc) => {
+        setFetchedData(doc.data());
+      });
+    };
+
+    fetchDataFromDB();
   }, []);
 
   return (
     <div className="header flexRow between center">
-      {/* Main div, 3 sub divs */}
       <div className="header__LogoLocation flexRow center">
-        {/* 1 */}
         <Link to="/" className="header__logo">
           <img src={AmazonLogo} alt="Amazon" />
         </Link>
@@ -51,7 +62,6 @@ const Header = () => {
             <div className="flexColumn center pointer">
               <span className="headerNav__optionLineOne">Deliver to</span>
               <span className="headerNav__optionLineTwo">
-                {/* <h3>Pakistan</h3> */}
                 {vistorsDetails.country_name}
               </span>
             </div>
@@ -59,8 +69,6 @@ const Header = () => {
         )}
       </div>
       <div className="header__search flexRow evenly center" id="header__search">
-        {/* 2 */}
-
         <h3 onClick={() => setShow(!show)} className="headerSearch__listOpener">
           <span>{listCurrentValue}</span> <ArrowDropDownIcon />
         </h3>
@@ -85,7 +93,6 @@ const Header = () => {
         </span>
       </div>
       <div className="header__nav between flexRow center">
-        {/* 3 */}
         <div className="headerNav__languages pointer">
           <img src={EnglishFlag} alt="EN" />
           <KeyboardArrowDown />
@@ -96,9 +103,16 @@ const Header = () => {
           }}
           className="headerNav__option headerNav__loginOption borderOnHover flexColumn"
         >
-          <span className="headerNav__optionLineOne signIn marginNeg pointer">
-            Hello Guest, Sign In
-          </span>
+          {!currentUser ? (
+            <span className="headerNav__optionLineOne signIn marginNeg pointer">
+              Hello Guest, Sign In
+            </span>
+          ) : (
+            <span className="headerNav__optionLineOne signIn marginNeg pointer">
+              Hello, {fetchedData?.displayName}, Sign out
+            </span>
+          )}
+
           <span className="headerNav__optionLineTwo pointer">
             Accounts & Lists <KeyboardArrowDown className="signInArrow" />
           </span>
@@ -122,9 +136,19 @@ const Header = () => {
 const LoginDropDown = () => {
   const [{ currentUser }, dispatch] = useStateValue();
 
+  const signoutHandler = () => {
+    auth.signOut();
+  };
+
   return (
     <div className="loginDropDown flexColumn">
-      {!currentUser && (
+      {currentUser ? (
+        <div className="loginDropDown__top flexColumn">
+          <a>
+            <button onClick={signoutHandler}>Sign out</button>
+          </a>
+        </div>
+      ) : (
         <div className="loginDropDown__top flexColumn">
           <Link to="user_authentication">
             <button>Sign in</button>

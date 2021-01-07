@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Components/Header";
 import HeaderSecondary from "./Components/HeaderSecondary";
 import Homepage from "./Pages/Homepage";
@@ -8,8 +8,32 @@ import ShopingCart from "./Pages/ShopingCart";
 import Checkout from "./Pages/Checkout";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import { auth } from "./Files/firebase";
+import useStateValue from "./Files/StateProvider";
 
 const App = () => {
+  const [{ currentUser }, dispatch] = useStateValue();
+
+  console.log(currentUser);
+
+  React.useEffect(() => {
+    auth.onAuthStateChanged((userObj) => {
+      localStorage.setItem("userID", userObj?.uid);
+
+      if (userObj) {
+        dispatch({
+          type: "SET_USER",
+          user: userObj,
+        });
+      } else {
+        dispatch({
+          type: "SET_USER",
+          user: null,
+        });
+      }
+    });
+  }, []);
+
   return (
     <Router>
       <div className="app">

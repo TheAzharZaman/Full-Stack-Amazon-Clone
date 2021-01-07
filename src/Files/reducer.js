@@ -40,11 +40,11 @@ const reducer = (state, action) => {
     default:
       return state;
 
-    // case "REMOVE_FROM_BASKET":
-    //   return {
-    //     ...state,
-    //     currentUser: action.user,
-    //   }
+    case "SET_USER":
+      return {
+        ...state,
+        currentUser: action.user,
+      };
   }
 };
 

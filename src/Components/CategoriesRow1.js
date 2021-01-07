@@ -1,8 +1,11 @@
 import React from "react";
 import Category from "./Category";
 import { Link } from "react-router-dom";
+import useStateValue from "../Files/StateProvider";
 
 const CategoriesRow = () => {
+  const [{ currentUser }, dispatch] = useStateValue();
+
   return (
     <div className="categories__row categories__row1 flexRow between">
       <Category
@@ -20,13 +23,16 @@ const CategoriesRow = () => {
         imgUrl="https://i.ibb.co/PxPtBY6/hd.jpg"
         linkText="Shop Now"
       />
+
       <div className="signin__promotion flexColumn">
-        <div className="signin flexColumn">
-          <h3>Sign in for the best experience</h3>
-          <Link to="/user_authentication">
-            <button>Sign in securely</button>
-          </Link>
-        </div>
+        {!currentUser && (
+          <div className="signin flexColumn">
+            <h3>Sign in for the best experience</h3>
+            <Link to="/user_authentication">
+              <button>Sign in securely</button>
+            </Link>
+          </div>
+        )}
         <div
           style={{
             backgroundImage: `url('https://i.ibb.co/PmJw03C/prom.jpg')`,
