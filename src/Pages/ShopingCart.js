@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./ShopingCart.css";
+import "../Components/Product.css";
 import CurrencyFormat from "react-currency-format";
 import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
 import { db } from "../Files/firebase";
+import Product from "../Components/Category";
 
 const ShopingCart = () => {
   const [{ basket, currentUser }, dispatch] = useStateValue();
   const [sortedBasket, setSortedBasket] = React.useState([]);
   const [fetchedData, setFetchedData] = useState({});
-  const [userID, setUserID] = useState(localStorage.getItem("userID"));
 
   useEffect(() => {
     const sortBasket = () => {
@@ -19,7 +20,7 @@ const ShopingCart = () => {
     };
 
     const fetchDataFromDB = () => {
-      const docRef = db.collection("users").doc(userID);
+      const docRef = db.collection("users").doc(currentUser?.uid);
 
       docRef.get().then((doc) => {
         setFetchedData(doc.data());
@@ -31,43 +32,69 @@ const ShopingCart = () => {
     setSortedBasket(sortBasket);
   }, [basket]);
 
+  const emptyCart = () => {
+    dispatch({
+      type: "EMPTY_BASKET",
+      newBasket: [],
+    });
+  };
+
   return (
-    <div className="shopingCart flexRow evenly">
-      <div className="shopingCart__left flexColumn">
-        <div className="shopingCart__tagline">
-          {basket.length < 1 && (
+    <div className="shopingCart flexColumn">
+      <div className="shopingCart__mainSection flexRow evenly">
+        <div className="shopingCart__left flexColumn">
+          <div className="shopingCart__leftHeader flexRow">
             <div>
-              <span class="shopingCart__emptyTagline">
-                {fetchedData?.displayName} Your Shoping Basket is Empty
-              </span>
-              <div className="shopingCart__emptyReturnBox">
-                <h5>Please return to products page to select something</h5>
-                <Link to="/">
-                  <KeyboardReturnIcon />
-                </Link>
-              </div>
+              <span class="shopingCart__emptyTagline">Shopping Cart</span>
+              {basket.length > 0 && (
+                <h3
+                  onClick={emptyCart}
+                  className="shopingCart__deselectAll mainHoverEffect"
+                >
+                  Deselect all items
+                </h3>
+              )}
+              {basket.length < 1 && (
+                <div className="shopingCart__emptyReturnBox">
+                  <h5>Please return to products page to select something</h5>
+                  <Link to="/">
+                    <KeyboardReturnIcon />
+                  </Link>
+                </div>
+              )}
             </div>
-          )}
+            {basket.length > 0 && <h3>Price</h3>}
+          </div>
+          <div className="shopingCart__productsList">
+            {basket.length > 0 &&
+              sortedBasket.map((product) => (
+                <ShopingCartProduct
+                  id={product.id}
+                  title={product.title}
+                  imgUrl={product.imgUrl}
+                  rating={product.rating}
+                  price={product.price}
+                />
+              ))}
+          </div>
           {basket.length > 0 && (
-            <span>{fetchedData?.displayName} Your Shoping Basket</span>
-          )}
-          {/* <h3>Your Shoping basket</h3> */}
-        </div>
-        <div className="shopingCart__productsList">
-          {basket.length > 0 &&
-            sortedBasket.map((product) => (
-              <ShopingCartProduct
-                id={product.id}
-                title={product.title}
-                imgUrl={product.imgUrl}
-                rating={product.rating}
-                price={product.price}
+            <h3 className="productsList__subTotal">
+              <span>Subtotal ({basket.length} items):</span>
+
+              <CurrencyFormat
+                decimalScale={2}
+                value={basketTotal(basket)}
+                displayType={"text"}
+                thousandSeperator={true}
+                prefix={"$"}
+                renderText={(value) => <strong>{value}</strong>}
               />
-            ))}
+            </h3>
+          )}
         </div>
-      </div>
-      <div className="shopingCart__right flexColumn">
-        <SubTotal numberOfItems={basket.length} basket={basket} />
+        <div className="shopingCart__right flexColumn">
+          <SubTotal numberOfItems={basket.length} basket={basket} />
+        </div>
       </div>
     </div>
   );
@@ -116,10 +143,7 @@ const ShopingCartProduct = ({ id, title, rating, price, imgUrl }) => {
     <div className="shopingCart__product flexRow">
       <img className="shopingCart__productImage" src={imgUrl} />
       <div className="shopingCart__productInfo">
-        <h3 className="shopingCart__productTitle">{title}</h3>
-        <p className="shopingCart__productPrice">
-          <small>$</small> <strong>{price}</strong>
-        </p>
+        <h3 className="shopingCart__productTitle mainHoverEffect">{title}</h3>
         <div className="shopingCart__productRating flexRow">
           {Array(rating)
             .fill()
@@ -127,13 +151,17 @@ const ShopingCartProduct = ({ id, title, rating, price, imgUrl }) => {
               <p>⭐</p>
             ))}
         </div>
-        <button
-          onClick={removeFromBasket}
-          className="shopingCart__productButton"
-        >
+        <div className="gift">
+          <input type="checkbox" />
+          <h3> This product is a gift</h3>
+        </div>
+        <h3 onClick={removeFromBasket} className="shopingCart__productButton">
           Remove from cart
-        </button>
+        </h3>
       </div>
+      <p className="shopingCart__productPrice">
+        <strong>${price}</strong>
+      </p>
     </div>
   );
 };

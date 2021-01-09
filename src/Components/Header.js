@@ -39,7 +39,7 @@ const Header = () => {
     getUserGeoLocationDetails();
 
     const fetchDataFromDB = () => {
-      const docRef = db.collection("users").doc(userID);
+      const docRef = db.collection("users").doc(currentUser?.uid);
 
       docRef.get().then((doc) => {
         setFetchedData(doc.data());
@@ -109,7 +109,7 @@ const Header = () => {
             </span>
           ) : (
             <span className="headerNav__optionLineOne signIn marginNeg pointer">
-              Hello, {fetchedData?.displayName}, Sign out
+              Hello, {fetchedData?.displayName}
             </span>
           )}
 

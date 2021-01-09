@@ -1,18 +1,23 @@
-import React from "react";
-import HeaderSecondary from "../Components/HeaderSecondary";
+import React, { useState } from "react";
 import HeroSection from "../Components/HeroSection";
 import "./Homepage.css";
-
 import CategoriesRow1 from "../Components/CategoriesRow1";
 import CategoriesRow2 from "../Components/CategoriesRow2";
 import CategoriesRow3 from "../Components/CategoriesRow3";
 import CategoriesRow4 from "../Components/CategoriesRow4";
-
 import Product from "../Components/Product";
-
+import DoneIcon from "@material-ui/icons/Done";
+import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import ProductsSlider from "../Components/ProductsSlider";
+import useStateValue from "../Files/StateProvider";
+import { Checkbox } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { basketTotal } from "../Files/reducer";
+import CurrencyFormat from "react-currency-format";
 
 const Homepage = () => {
+  const [{ basket }] = useStateValue();
+
   return (
     <div className="home">
       <HeroSection />
@@ -20,20 +25,22 @@ const Homepage = () => {
       <CategoriesRow1 />
       <CategoriesRow2 categoryRowSpecificClass="categories__row2" />
 
+      {basket.length > 0 && <BasketLiveStatusBar />}
+
       <div className="products__row products__row1 flexRow center">
         <Product
           id="1255345"
           title="Dell Latitude 2415p | 4GB | 320GB | UHD Display | Life-time Guarentee"
           price={199.99}
           imgUrl="https://i.ibb.co/Ry17Zy6/5.jpg"
-          rating={1}
+          rating={4}
         />
         <Product
           id="255325"
           title="HP Elitebook 8440p | 6GB | 500GB | UHD Display | 2 Year Guarentee"
           price={499.99}
           imgUrl="https://i.ibb.co/kmCKqPx/55.jpg"
-          rating={2}
+          rating={5}
         />
         <Product
           id="432453543"
@@ -76,6 +83,51 @@ const Homepage = () => {
 
       <CategoriesRow3 />
       <CategoriesRow4 />
+    </div>
+  );
+};
+
+const BasketLiveStatusBar = () => {
+  const [{ basket }] = useStateValue();
+
+  return (
+    <div className="basketLive__statusBar flexRow">
+      <div className="basketLive__left">
+        <DoneIcon />
+        <h3>{basket.length} Product(s) in Cart</h3>
+      </div>
+      <div className="basketLive__center flexColumn">
+        <div className="basket__subtotal flexRow">
+          <h3>
+            Cart subtotal <span>({basket.length} items):</span>{" "}
+          </h3>
+          <CurrencyFormat
+            decimalScale={2}
+            value={basketTotal(basket)}
+            displayType={"text"}
+            thousandSeperator={true}
+            prefix={"$"}
+            renderText={(value) => <strong>{value}</strong>}
+          />
+        </div>
+
+        <div className="gift__check flexRow">
+          <input type="checkbox" className="checkbox" />
+          <div className="flexRow">
+            <CardGiftcardIcon /> <h5> This order contains a gift</h5>
+          </div>
+        </div>
+      </div>
+      <div className="basketLive__right flexRow">
+        <Link to="cart">
+          <button className="cart__btn">Cart</button>
+        </Link>
+        <Link to="checkout">
+          <button className="checkout__btn">
+            Proceed to Checkout({basket.length} items)
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

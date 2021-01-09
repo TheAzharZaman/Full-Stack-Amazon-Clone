@@ -45,3 +45,14 @@ li {
 .pointer {
   cursor: pointer;
 }
+
+.mainHoverEffect {
+  font-size: 13.5px;
+  color: #1196ab;
+}
+
+.mainHoverEffect:hover {
+  text-decoration: underline;
+  color: #cd6438;
+  text-decoration-color: #cd6438;
+}

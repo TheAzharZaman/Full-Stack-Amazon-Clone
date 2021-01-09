@@ -44,7 +44,6 @@ const Signup = () => {
           email: email,
           accountPassword: password,
         });
-        localStorage.setItem("displayName", displayName);
 
         if (userObj) {
           history.push("/");

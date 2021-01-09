@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { db } from "../Files/firebase";
+import useStateValue from "../Files/StateProvider";
 
 const Product = ({
   categotyTitle,
@@ -16,11 +19,38 @@ const Product = ({
   imgSrc2,
   imgSrc3,
   imgSrc4,
+  specialBlocksCat,
+  specialBlocksCatTitle,
 }) => {
+  const [fetchedData, setFetchedData] = useState({});
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
+  const [{ currentUser }] = useStateValue();
+
+  React.useEffect(() => {
+    const fetchDataFromDB = () => {
+      const docRef = db.collection("users").doc(currentUser?.uid);
+
+      docRef.get().then((doc) => {
+        setFetchedData(doc.data());
+      });
+    };
+
+    fetchDataFromDB();
+  }, []);
+
   return (
     <div className={`category ${row2CategoryClass && "row2__category"}`}>
       <div className="category__content">
         <h3 className="categoty__title">{categotyTitle}</h3>
+        {specialBlocksCat && (
+          <div className="user__Avatar">
+            <Avatar src="https://www.amazon.com/avatar/default?customer_id=amzn1.account.AHXOHXUPVLWUMOQM5WE6SOM6FU3Q&max_width=60&max_height=60&square=true" />
+            <h3>Hi, {fetchedData?.displayName}</h3>
+          </div>
+        )}
+        {specialBlocksCat && (
+          <h3 className="specialBlocksCat__title">{specialBlocksCatTitle}</h3>
+        )}
         {!needBlocksInCategory ? (
           <Link to={redirectUrl}>
             <div

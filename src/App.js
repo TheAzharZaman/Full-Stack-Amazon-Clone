@@ -18,13 +18,12 @@ const App = () => {
 
   React.useEffect(() => {
     auth.onAuthStateChanged((userObj) => {
-      localStorage.setItem("userID", userObj?.uid);
-
       if (userObj) {
         dispatch({
           type: "SET_USER",
           user: userObj,
         });
+        localStorage.setItem("userID", userObj?.uid);
       } else {
         dispatch({
           type: "SET_USER",

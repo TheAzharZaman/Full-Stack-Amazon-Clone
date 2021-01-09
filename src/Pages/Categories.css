@@ -10,6 +10,27 @@
   width: 93%;
 }
 
+.user__Avatar {
+  display: flex;
+  flex-direction: row;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+.user__Avatar > h3 {
+  font-size: 14px;
+  margin-left: 0.4rem;
+  margin-top: 3px;
+  color: rgb(41, 41, 41);
+}
+
+.specialBlocksCat__title {
+  font-size: 13px;
+  margin-top: 1rem;
+  color: rgb(41, 41, 41);
+  margin-left: 4px;
+}
+
 .categories__row2 {
   margin-top: 8rem;
   width: 94.25%;
