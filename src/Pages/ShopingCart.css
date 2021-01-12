@@ -35,6 +35,7 @@
 }
 
 .shopingCart__deselectAll {
+  font-size: 13.5px;
   font-weight: 300;
   margin-top: 0.5rem;
   margin-left: 5px;

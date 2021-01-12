@@ -7,7 +7,7 @@ import { auth, db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
 
 const Signup = () => {
-  const [{ currentUser }, dispatch] = useStateValue();
+  const [{ currentUser, needToRedirectToCheckout }, dispatch] = useStateValue();
   const [userID, setUserID] = useState(localStorage.getItem("userID"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,10 +43,21 @@ const Signup = () => {
           displayName: displayName,
           email: email,
           accountPassword: password,
+          addressAdded: false,
+          addressMarkedAsDefault: false,
+          address: {},
         });
 
         if (userObj) {
-          history.push("/");
+          if (needToRedirectToCheckout) {
+            history.replace("/checkout");
+            dispatch({
+              type: "SET_REDIRECT_TO_CHECKOUT",
+              stateValue: false,
+            });
+          } else {
+            history.replace("/");
+          }
         }
       })
       .catch((error) => alert(error.message));

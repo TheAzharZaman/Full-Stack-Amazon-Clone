@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeroSection from "../Components/HeroSection";
 import "./Homepage.css";
 import CategoriesRow1 from "../Components/CategoriesRow1";
@@ -16,7 +16,7 @@ import { basketTotal } from "../Files/reducer";
 import CurrencyFormat from "react-currency-format";
 
 const Homepage = () => {
-  const [{ basket }] = useStateValue();
+  const [{ basket, currentUser }] = useStateValue();
 
   return (
     <div className="home">
@@ -57,7 +57,6 @@ const Homepage = () => {
           rating={5}
         />
       </div>
-
       <ProductsSlider title="Discover Amazon" linkText="Click to learn more">
         <ProductsSliderProduct imgUrl="https://i.ibb.co/gg3XGbW/1.jpg" />
         <ProductsSliderProduct imgUrl="https://i.ibb.co/pWmHyff/2.jpg" />
@@ -88,7 +87,16 @@ const Homepage = () => {
 };
 
 const BasketLiveStatusBar = () => {
-  const [{ basket }] = useStateValue();
+  const [{ basket, currentUser }, dispatch] = useStateValue();
+
+  const setUserPendingState = () => {
+    if (!currentUser) {
+      dispatch({
+        type: "SET_REDIRECT_TO_CHECKOUT",
+        stateValue: true,
+      });
+    }
+  };
 
   return (
     <div className="basketLive__statusBar flexRow">
@@ -122,7 +130,10 @@ const BasketLiveStatusBar = () => {
         <Link to="cart">
           <button className="cart__btn">Cart</button>
         </Link>
-        <Link to="checkout">
+        <Link
+          onClick={setUserPendingState}
+          to={currentUser ? "checkout" : "user_authentication"}
+        >
           <button className="checkout__btn">
             Proceed to Checkout({basket.length} items)
           </button>

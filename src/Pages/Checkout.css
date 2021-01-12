@@ -1,3 +1,252 @@
-.HELLO {
-  color: red;
+.checkout {
+  width: 100%;
+  height: 100%;
+  padding: 0 0 3rem;
+  background-color: white;
+}
+
+.checkout__content {
+  width: 70%;
+  margin-left: 13.5rem;
+  padding: 0.25rem 0 0 0;
+}
+
+.checkoutHeader__steps {
+  align-items: center;
+}
+
+.checkoutHeader__steps > a > img {
+  width: 115px;
+  padding: 0.5rem 0;
+}
+
+.header__steps {
+  margin-top: 0.75rem;
+  margin-left: 1rem;
+}
+
+.header__steps > h3 {
+  font-weight: 400;
+  font-size: 11px;
+  padding: 0.35rem 0.75rem 0.25rem 0.75rem;
+}
+
+.header__steps > h3:nth-child(1) {
+  padding-left: 0;
+}
+
+.header__steps > h3:nth-child(3) {
+  padding-right: 0;
+}
+
+.passed {
+  color: #eda864;
+  border-top: 2px solid #e49b3d;
+}
+
+.active {
+  border-top: 2px solid #f8981d;
+  color: #e47911;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+.checkoutHeader__addressHead {
+  padding: 0 0 2.25rem 0;
+  border-bottom: 1px solid rgb(231, 231, 231);
+}
+
+.checkoutHeader__addressPresentState {
+  padding: 0 0 0.7rem 0;
+}
+
+.checkoutHeader__addressHead > h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 24.5px;
+  color: #333333;
+  margin-top: 1.45rem;
+}
+
+.checkoutHeader__addressHead > p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #333333;
+  margin-top: 1.65rem;
+  margin-left: 2px;
+  line-height: 19px;
+}
+
+/* Main CONTENT Section */
+
+/* ADDRESS */
+
+.alreadyPresent__address {
+  margin-bottom: 3.5rem;
+}
+
+.alreadyPresent__address > strong {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.alreadyPresent__address > h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13.75px;
+  line-height: 21px;
+  font-weight: 400;
+}
+
+.alreadyPresent__address > div {
+  width: 40%;
+}
+
+.alreadyPresent__address > div > button {
+  background-color: #f2cc6e;
+  border-radius: 2px;
+  width: 100%;
+  padding: 0 1rem;
+  height: 32px;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+  margin-top: 1.1rem;
+}
+
+.alreadyPresent__address > div > button:hover {
+  background-color: #f1c860;
+}
+
+.address__controls > button {
+  padding: 2.5px 0.75rem;
+  font-size: 11.5px;
+  width: 49%;
+  background-color: #eff0f3;
+  outline-width: 0;
+  border: 1px solid rgb(204, 203, 203);
+  border-radius: 3px;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.address__controls > button:nth-child(2) {
+  margin-left: 0.5rem;
+}
+
+.address__controls > button:hover {
+  background-color: #e3e6ec;
+}
+
+/* New address area */
+
+.checkout__addressArea {
+  flex: 0.5;
+  padding: 1.35rem 0 0 0;
+  /* border-right: 1px solid rgb(231, 231, 231); */
+}
+
+.checkout__paymentArea {
+  align-items: center;
+  flex: 0.5;
+}
+
+.address__form {
+  width: 90%;
+}
+
+.address__form > h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  line-height: 27.3px;
+  margin-bottom: 0.75rem;
+}
+
+.address__input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.75rem;
+}
+
+.address__input:nth-child(1) {
+  margin-top: 0;
+}
+
+.address__input > label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12.5px;
+  line-height: 19px;
+  margin-bottom: 2px;
+}
+
+.address__input > input {
+  height: 29px;
+  font-size: 13px;
+  padding: 0 5px;
+  outline-width: 0;
+  border: 1.5px solid rgb(201, 201, 201);
+  border-top: 2px solid rgb(201, 201, 201);
+  border-radius: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+.checkoutCountries__select {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.MuiOutlinedInput-input {
+  font-size: 15px !important;
+  background-color: #edeff2 !important;
+  padding: 8px 0.5rem 8px 0.85rem !important;
+}
+
+.MuiOutlinedInput-input:hover {
+  background-color: #dfe2e7 !important;
+}
+
+.dropdown__flag {
+  width: 17px;
+  margin-right: 15px;
+  margin-top: 2px;
+}
+
+.address__inputDefault {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.address__inputDefault > h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 19px;
+  margin-left: 0.35rem;
+}
+
+.address__submitBtn {
+  background-color: #f2cc6e;
+  border-radius: 2px;
+  width: 23%;
+  height: 30px;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.address__submitBtn:hover {
+  background-color: #f1c860;
+}
+
+/* PAYMENT SECTION */
+
+.checkout__paymentArea > h3 {
+  margin-top: 1.25rem;
 }

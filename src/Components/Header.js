@@ -14,40 +14,12 @@ import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { auth, db } from "../Files/firebase";
 
-const Header = () => {
+const Header = ({ displayName, countryName }) => {
   const [{ basket, currentUser }, dispatch] = useStateValue();
   const [vistorsDetails, setVisitorsDetails] = useState(null);
   const [listCurrentValue, setListCurrentValue] = useState("All");
   const [show, setShow] = useState(false);
   const [showLoginDropDown, setShowLoginDropDown] = useState(false);
-  const [fetchedData, setFetchedData] = useState({});
-  const [displayName, setDisplayName] = useState("Guest");
-  const [userID, setUserID] = useState(localStorage.getItem("userID"));
-
-  useEffect(() => {
-    const API_CALL_URL =
-      "https://geolocation-db.com/json/8f12b5f0-2bc2-11eb-9444-076679b7aeb0";
-
-    const getUserGeoLocationDetails = () => {
-      fetch(API_CALL_URL)
-        .then((response) => response.json())
-        .then((data) => {
-          setVisitorsDetails(data);
-          console.log("This is visiting User Details =>", data);
-        });
-    };
-    getUserGeoLocationDetails();
-
-    const fetchDataFromDB = () => {
-      const docRef = db.collection("users").doc(currentUser?.uid);
-
-      docRef.get().then((doc) => {
-        setFetchedData(doc.data());
-      });
-    };
-
-    fetchDataFromDB();
-  }, []);
 
   return (
     <div className="header flexRow between center">
@@ -56,17 +28,15 @@ const Header = () => {
           <img src={AmazonLogo} alt="Amazon" />
         </Link>
 
-        {vistorsDetails && (
-          <div className="header__delivery flexRow">
-            <PersonPinCircle className="locationIcon" />
-            <div className="flexColumn center pointer">
-              <span className="headerNav__optionLineOne">Deliver to</span>
-              <span className="headerNav__optionLineTwo">
-                {vistorsDetails.country_name}
-              </span>
-            </div>
+        {/* {vistorsDetails && ( */}
+        <div className="header__delivery flexRow">
+          <PersonPinCircle className="locationIcon" />
+          <div className="flexColumn center pointer">
+            <span className="headerNav__optionLineOne">Deliver to</span>
+            <span className="headerNav__optionLineTwo">{countryName}</span>
           </div>
-        )}
+        </div>
+        {/* )} */}
       </div>
       <div className="header__search flexRow evenly center" id="header__search">
         <h3 onClick={() => setShow(!show)} className="headerSearch__listOpener">
@@ -109,7 +79,7 @@ const Header = () => {
             </span>
           ) : (
             <span className="headerNav__optionLineOne signIn marginNeg pointer">
-              Hello, {fetchedData?.displayName}
+              Hi, {displayName}
             </span>
           )}
 
@@ -187,3 +157,51 @@ const LoginDropDown = () => {
   );
 };
 export default Header;
+
+// useEffect(() => {
+//   const fetchDataFromDB = () => {
+//     const docRef = db.collection("users").doc(currentUser?.uid);
+
+//     docRef.get().then((doc) => {
+//       setFetchedData(doc.data());
+//       console.log("fetched user details", doc.data());
+
+//       dispatch({
+//         type: "SET_FETCHED_DETAILS",
+//         fetchedData: doc.data(),
+//       });
+//     });
+//   };
+
+//   fetchDataFromDB();
+// }, []);
+
+// useEffect(() => {
+//   setSecureData({
+//     displayName: fetchedData?.displayName,
+//     userID: fetchedData?.userID,
+//     email: fetchedData?.email,
+//   });
+// }, [fetchedData]);
+
+// useEffect(() => {
+//   localStorage.setItem("fetchedData", JSON.stringify(secureData));
+// }, [secureData]);
+
+// const [fetchedData, setFetchedData] = useState({});
+// const [secureData, setSecureData] = useState({});
+
+// useEffect(() => {
+//   const API_CALL_URL =
+//     "https://geolocation-db.com/json/8f12b5f0-2bc2-11eb-9444-076679b7aeb0";
+
+//   const getUserGeoLocationDetails = () => {
+//     fetch(API_CALL_URL)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setVisitorsDetails(data);
+//         console.log("This is visiting User Details =>", data);
+//       });
+//   };
+//   getUserGeoLocationDetails();
+// }, []);

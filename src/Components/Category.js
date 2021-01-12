@@ -22,21 +22,7 @@ const Product = ({
   specialBlocksCat,
   specialBlocksCatTitle,
 }) => {
-  const [fetchedData, setFetchedData] = useState({});
-  const [userID, setUserID] = useState(localStorage.getItem("userID"));
-  const [{ currentUser }] = useStateValue();
-
-  React.useEffect(() => {
-    const fetchDataFromDB = () => {
-      const docRef = db.collection("users").doc(currentUser?.uid);
-
-      docRef.get().then((doc) => {
-        setFetchedData(doc.data());
-      });
-    };
-
-    fetchDataFromDB();
-  }, []);
+  const [{ fetchedUserDetails }] = useStateValue();
 
   return (
     <div className={`category ${row2CategoryClass && "row2__category"}`}>
@@ -45,7 +31,7 @@ const Product = ({
         {specialBlocksCat && (
           <div className="user__Avatar">
             <Avatar src="https://www.amazon.com/avatar/default?customer_id=amzn1.account.AHXOHXUPVLWUMOQM5WE6SOM6FU3Q&max_width=60&max_height=60&square=true" />
-            <h3>Hi, {fetchedData?.displayName}</h3>
+            <h3>Hi, {fetchedUserDetails?.displayName}</h3>
           </div>
         )}
         {specialBlocksCat && (
@@ -70,7 +56,6 @@ const Product = ({
             </div>
           </div>
         )}
-
         <Link className="redirectLink" to={redirectUrl}>
           {linkText}
         </Link>

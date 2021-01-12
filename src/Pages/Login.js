@@ -4,21 +4,31 @@ import Logo from "./logo.png";
 import { Link, useHistory } from "react-router-dom";
 import AuthFooter from "../Components/AuthFooter";
 import { auth } from "../Files/firebase";
+import useStateValue from "../Files/StateProvider";
 
 const Login = () => {
+  const [{ needToRedirectToCheckout }, dispatch] = useStateValue();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const history = useHistory();
 
-  const signupHandler = async (e) => {
+  const signinHandler = async (e) => {
     e.preventDefault();
 
     auth
       .signInWithEmailAndPassword(email, password)
       .then((authObj) => {
         if (authObj) {
-          history.push("/");
+          if (needToRedirectToCheckout) {
+            history.replace("/checkout");
+            dispatch({
+              type: "SET_REDIRECT_TO_CHECKOUT",
+              stateValue: false,
+            });
+          } else {
+            history.replace("/");
+          }
         }
       })
       .catch((err) => alert(err.message));
@@ -30,7 +40,11 @@ const Login = () => {
         <Link to="/">
           <img className="login__logo" src={Logo} />
         </Link>
-        <form onSubmit={signupHandler} className="login__form">
+        {needToRedirectToCheckout && (
+          <h3 className="proceedToCheckout">Sign in to proceed to checkout</h3>
+        )}
+
+        <form onSubmit={signinHandler} className="login__form">
           <h3>Sign In</h3>
           <div className="loginForm__input">
             <label>Email</label>

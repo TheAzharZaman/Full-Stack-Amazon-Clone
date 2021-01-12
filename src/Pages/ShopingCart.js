@@ -6,28 +6,15 @@ import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
-import { db } from "../Files/firebase";
-import Product from "../Components/Category";
 
 const ShopingCart = () => {
   const [{ basket, currentUser }, dispatch] = useStateValue();
   const [sortedBasket, setSortedBasket] = React.useState([]);
-  const [fetchedData, setFetchedData] = useState({});
 
   useEffect(() => {
     const sortBasket = () => {
       return basket.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
     };
-
-    const fetchDataFromDB = () => {
-      const docRef = db.collection("users").doc(currentUser?.uid);
-
-      docRef.get().then((doc) => {
-        setFetchedData(doc.data());
-      });
-    };
-
-    fetchDataFromDB();
 
     setSortedBasket(sortBasket);
   }, [basket]);
@@ -101,6 +88,17 @@ const ShopingCart = () => {
 };
 
 const SubTotal = ({ numberOfItems, basket }) => {
+  const [{ currentUser }, dispatch] = useStateValue();
+
+  const setUserPendingState = () => {
+    if (!currentUser) {
+      dispatch({
+        type: "SET_REDIRECT_TO_CHECKOUT",
+        stateValue: true,
+      });
+    }
+  };
+
   return (
     <div className="subtotal flexColumn between">
       <CurrencyFormat
@@ -121,8 +119,11 @@ const SubTotal = ({ numberOfItems, basket }) => {
           </>
         )}
       />
-      <Link to="checkout">
-        <button>Proceed to Checkout</button>
+      <Link
+        onClick={setUserPendingState}
+        to={currentUser ? "checkout" : "user_authentication"}
+      >
+        <button disabled={basket.length < 1}>Proceed to Checkout</button>
       </Link>
     </div>
   );
