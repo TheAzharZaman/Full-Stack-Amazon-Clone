@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import AmazonLogo from "./logo.png";
 import "./Checkout.css";
-import {
-  FormControl,
-  FormLabel,
-  Link,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
+import { FormControl, Link, MenuItem, Select } from "@material-ui/core";
 import { db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Checkout = () => {
-  const [{ currentUser }] = useStateValue();
+  const [{ currentUser, formState }, dispatch] = useStateValue();
   const [countryNames, setCountryNames] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
     JSON.parse(localStorage.getItem("visitingUserLoc"))?.country_code
@@ -33,8 +27,11 @@ const Checkout = () => {
   const [addressPresentInDatabase, setAddressPresentInDatabase] = useState(
     false
   );
-  const [showForm, setShowForm] = useState(true);
   const [restMode, setRestMode] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [adding, setAddingState] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     db.collection("users")
@@ -86,6 +83,7 @@ const Checkout = () => {
         "Some of the mendatory fields are missing, please check before submitting."
       );
     } else {
+      setAddingState(true);
       await db
         .collection("users")
         .doc(currentUser?.uid)
@@ -106,7 +104,8 @@ const Checkout = () => {
           },
           { merge: true }
         );
-      setRestMode(true);
+
+      setAddingState(false);
 
       await db
         .collection("users")
@@ -126,6 +125,9 @@ const Checkout = () => {
           },
           { merge: true }
         );
+      setRestMode(true);
+
+      history.push("checkout_payment");
     }
   };
 
@@ -141,10 +143,14 @@ const Checkout = () => {
     setAddressPresentInDatabase(false);
   };
 
-  const finalizeOrderAddress = () => {
-    setShowForm(false);
-
-    db.collection("users")
+  const finalizeOrderAddress = async () => {
+    dispatch({
+      type: "SET_FORM_STATE",
+      state: false,
+    });
+    setProcessing(true);
+    await db
+      .collection("users")
       .doc(currentUser?.uid)
       .set(
         {
@@ -161,11 +167,28 @@ const Checkout = () => {
         },
         { merge: true }
       );
+
+    history.push("checkout_payment");
+
+    setProcessing(false);
   };
 
   const editOrderAddress = () => {
-    setShowForm(true);
+    dispatch({
+      type: "SET_FORM_STATE",
+      state: true,
+    });
     setRestMode(false);
+  };
+
+  const buttonStatesReturner = () => {
+    if (restMode) {
+      return "Address added";
+    } else if (adding) {
+      return "Adding address";
+    } else {
+      return "Add this address";
+    }
   };
 
   return (
@@ -178,7 +201,8 @@ const Checkout = () => {
             </Link>
             <div className="header__steps flexRow">
               <h3 className="passed">LOGIN</h3>
-              <h3 className="active">SHIPPING & ORDER PLACEMENT</h3>
+              <h3 className="active">SHIPPING ADDRESS</h3>
+              <h3 className="upcoming">PAYMENT & ORDER PLACEMENT</h3>
             </div>
           </div>
           <div
@@ -220,12 +244,10 @@ const Checkout = () => {
                   <span>{fetchedData?.address.province}</span>,
                   <span>{fetchedData?.address.country}</span>
                 </h3>
-                <h3>{fetchedData?.address.phoneNo}</h3>
+                <h3>Phone: {fetchedData?.address.phoneNo}</h3>
                 <div>
                   <button onClick={finalizeOrderAddress}>
-                    {!showForm
-                      ? "Delivering to this address"
-                      : "Deliver to this address"}
+                    {processing ? "Processing" : "Deliver to this address"}
                   </button>
                   <div className="address__controls flexRow">
                     <button onClick={editOrderAddress}>Edit</button>
@@ -235,7 +257,7 @@ const Checkout = () => {
               </div>
             )}
 
-            {showForm && (
+            {formState && (
               <form onSubmit={submitHandler} className="address__form">
                 <h3>Add a new address</h3>
                 <div className="address__input">
@@ -331,12 +353,10 @@ const Checkout = () => {
                   className="address__submitBtn"
                   type="submit"
                   value={!restMode ? "Add this Address" : "Address added"}
+                  value={buttonStatesReturner()}
                 />
               </form>
             )}
-          </div>
-          <div className="checkout__paymentArea flexColumn">
-            <h3>Here goes Payment Porcessing</h3>
           </div>
         </div>
       </div>

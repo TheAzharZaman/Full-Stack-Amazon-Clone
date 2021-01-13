@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  margin-top: 10rem;
+  margin-top: 5rem;
 }
 
 .backToTop__link {
@@ -18,7 +18,7 @@
 
 .footer__top {
   background-color: #232f3e;
-  padding: 3rem 13rem;
+  padding: 3.1rem 13rem 3.5rem;
   color: white;
   font-size: 14px;
   justify-content: space-evenly;
@@ -40,7 +40,7 @@
 
 .footerTop__linksSec > a {
   font-size: 14px;
-  line-height: 16.7px;
+  line-height: 17.5px;
   font-weight: 400;
   color: #ddddc4;
   margin-top: 8.5px;
@@ -49,4 +49,72 @@
 
 .footerTop__linksSec > a:hover {
   text-decoration: underline;
+}
+
+/* Main Links */
+
+.footer__main {
+  background-color: #131a22;
+  max-width: 100%;
+  padding: 2.75rem 14rem 2rem;
+  color: white;
+  justify-content: space-evenly;
+}
+
+.amazon__servicesColumn {
+  width: 5rem;
+}
+
+.amazon__service {
+  margin-bottom: 2.5rem;
+  cursor: pointer;
+}
+
+.amazon__service > strong {
+  font-size: 12px;
+  line-height: 13.5px;
+  font-weight: 300 !important;
+}
+
+.amazon__service > strong:hover {
+  text-decoration: underline;
+}
+
+.amazon__service > small {
+  font-size: 10px;
+  line-height: 11px;
+  font-weight: 300;
+  color: #999999;
+  margin-top: 5px;
+}
+
+.amazon__service > small:hover {
+  text-decoration: underline;
+}
+
+/* Copyright Section */
+
+.footer__copyrightSec {
+  align-items: center;
+  background-color: #131a22;
+  padding: 0 16rem 1.75rem;
+  max-width: 100%;
+  justify-content: center;
+}
+
+.footer__copyrightSec > a {
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  margin-right: 12px;
+}
+
+.footer__copyrightSec > a:hover {
+  text-decoration: underline;
+}
+
+.footer__copyrightSec > h3 {
+  font-weight: 300;
+  font-size: 12px;
+  color: #999999;
 }

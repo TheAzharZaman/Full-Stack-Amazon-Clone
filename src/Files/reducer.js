@@ -5,6 +5,7 @@ const initialState = {
   currentUser: null,
   fetchedUserDetails: {},
   needToRedirectToCheckout: false,
+  formState: true,
 };
 
 const basketTotal = (basket) => {
@@ -64,6 +65,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         needToRedirectToCheckout: action.stateValue,
+      };
+
+    case "SET_FORM_STATE":
+      return {
+        ...state,
+        formState: action.state,
       };
   }
 };

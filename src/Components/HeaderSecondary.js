@@ -3,7 +3,7 @@ import "./HeaderSecondary.css";
 
 const HeaderSecondary = () => {
   return (
-    <div className="headerSecondary">
+    <div className="headerSecondary" id="scrollToTop__dest">
       <div className="headerSecondary__left">
         <a href="#">Today's Deals</a>
         <a href="#">Customers Service</a>

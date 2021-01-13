@@ -38,19 +38,29 @@ const Signup = () => {
       .createUserWithEmailAndPassword(email, password)
       .then((userObj) => {
         console.log(userObj);
-        db.collection("users").doc(userObj?.user.uid).set({
-          userID: userObj?.user.uid,
-          displayName: displayName,
-          email: email,
-          accountPassword: password,
-          addressAdded: false,
-          addressMarkedAsDefault: false,
-          address: {},
-        });
+        db.collection("users")
+          .doc(userObj?.user.uid)
+          .set({
+            userID: userObj?.user.uid,
+            displayName: displayName,
+            email: email,
+            accountPassword: password,
+            addressAdded: false,
+            addressMarkedAsDefault: false,
+            address: {},
+            ordersPlaced: 0,
+            ordersDrafted: 0,
+            ordersCancelled: 0,
+            reportsSubmitted: 0,
+            feedbacksGiven: {
+              total: 0,
+              feedbacks: {},
+            },
+          });
 
         if (userObj) {
           if (needToRedirectToCheckout) {
-            history.replace("/checkout");
+            history.replace("/checkout_address");
             dispatch({
               type: "SET_REDIRECT_TO_CHECKOUT",
               stateValue: false,

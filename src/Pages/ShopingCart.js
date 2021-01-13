@@ -121,7 +121,7 @@ const SubTotal = ({ numberOfItems, basket }) => {
       />
       <Link
         onClick={setUserPendingState}
-        to={currentUser ? "checkout" : "user_authentication"}
+        to={currentUser ? "checkout_address" : "user_authentication"}
       >
         <button disabled={basket.length < 1}>Proceed to Checkout</button>
       </Link>

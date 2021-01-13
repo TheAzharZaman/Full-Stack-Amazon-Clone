@@ -132,7 +132,7 @@ const BasketLiveStatusBar = () => {
         </Link>
         <Link
           onClick={setUserPendingState}
-          to={currentUser ? "checkout" : "user_authentication"}
+          to={currentUser ? "checkout_address" : "user_authentication"}
         >
           <button className="checkout__btn">
             Proceed to Checkout({basket.length} items)

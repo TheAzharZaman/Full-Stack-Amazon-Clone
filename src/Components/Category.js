@@ -31,7 +31,7 @@ const Product = ({
         {specialBlocksCat && (
           <div className="user__Avatar">
             <Avatar src="https://www.amazon.com/avatar/default?customer_id=amzn1.account.AHXOHXUPVLWUMOQM5WE6SOM6FU3Q&max_width=60&max_height=60&square=true" />
-            <h3>Hi, {fetchedUserDetails?.displayName}</h3>
+            <h3 id="gg">Hi, {fetchedUserDetails?.displayName}</h3>
           </div>
         )}
         {specialBlocksCat && (

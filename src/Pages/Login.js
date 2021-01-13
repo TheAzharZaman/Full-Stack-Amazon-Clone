@@ -21,7 +21,7 @@ const Login = () => {
       .then((authObj) => {
         if (authObj) {
           if (needToRedirectToCheckout) {
-            history.replace("/checkout");
+            history.replace("/checkout_address");
             dispatch({
               type: "SET_REDIRECT_TO_CHECKOUT",
               stateValue: false,

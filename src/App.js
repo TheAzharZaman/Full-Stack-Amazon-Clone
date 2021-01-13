@@ -5,12 +5,15 @@ import Homepage from "./Pages/Homepage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import ShopingCart from "./Pages/ShopingCart";
-import Checkout from "./Pages/Checkout";
+import CheckoutAdress from "./Pages/CheckoutAddress";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import { auth, db } from "./Files/firebase";
 import useStateValue from "./Files/StateProvider";
 import Footer from "./Components/Footer";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutPayment from "./Pages/CheckoutPayment";
 
 const App = () => {
   const [{ currentUser }, dispatch] = useStateValue();
@@ -20,6 +23,10 @@ const App = () => {
   const [userLocDetails, setUserLocDetails] = useState();
 
   console.log("Current Logged In User =>>>", currentUser);
+
+  const promise = loadStripe(
+    "pk_test_51I8N1gJHgoNdpJN9NedWNqHGlHGZRCcKRyvxG9eB4tmOmwU6KXjJFeKbxqUbpSbi1vmR5tKNqp4tUIcybLHbsdT600cmjwGy5m"
+  );
 
   useEffect(() => {
     auth.onAuthStateChanged((userObj) => {
@@ -103,8 +110,13 @@ const App = () => {
           <Route path="/user_authentication">
             <Login />
           </Route>
-          <Route path="/checkout">
-            <Checkout />
+          <Route path="/checkout_payment">
+            <Elements stripe={promise}>
+              <CheckoutPayment />
+            </Elements>
+          </Route>
+          <Route path="/checkout_address">
+            <CheckoutAdress />
           </Route>
           <Route path="/cart">
             <Header
