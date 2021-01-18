@@ -6,24 +6,43 @@ import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
+import { FormControl, MenuItem, Select } from "@material-ui/core";
 
 const ShopingCart = () => {
   const [{ basket, currentUser }, dispatch] = useStateValue();
-  const [sortedBasket, setSortedBasket] = React.useState([]);
+  const [localBasket, setLocalBasket] = useState(
+    localStorage.getItem("basket")
+      ? JSON.parse(localStorage.getItem("basket"))
+      : basket
+  );
+
+  const [sortedBasket, setSortedBasket] = useState([]);
+
+  useEffect(() => {
+    console.log("Current State basket", basket);
+  }, [basket]);
+
+  useEffect(() => {
+    console.log("Current Local basket", localBasket);
+  }, [localBasket]);
 
   useEffect(() => {
     const sortBasket = () => {
-      return basket.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+      return localBasket.sort(
+        (a, b) => parseFloat(b.price) - parseFloat(a.price)
+      );
     };
 
     setSortedBasket(sortBasket);
-  }, [basket]);
+  }, [localBasket]);
 
   const emptyCart = () => {
     dispatch({
       type: "EMPTY_BASKET",
       newBasket: [],
     });
+    localStorage.clear();
+    setLocalBasket([]);
   };
 
   return (
@@ -33,7 +52,7 @@ const ShopingCart = () => {
           <div className="shopingCart__leftHeader flexRow">
             <div>
               <span class="shopingCart__emptyTagline">Shopping Cart</span>
-              {basket.length > 0 && (
+              {localBasket.length > 0 && (
                 <h3
                   onClick={emptyCart}
                   className="shopingCart__deselectAll mainHoverEffect"
@@ -41,7 +60,7 @@ const ShopingCart = () => {
                   Deselect all items
                 </h3>
               )}
-              {basket.length < 1 && (
+              {localBasket.length < 1 && (
                 <div className="shopingCart__emptyReturnBox">
                   <h5>Please return to products page to select something</h5>
                   <Link to="/">
@@ -50,27 +69,30 @@ const ShopingCart = () => {
                 </div>
               )}
             </div>
-            {basket.length > 0 && <h3>Price</h3>}
+            {localBasket.length > 0 && <h3>Price</h3>}
           </div>
           <div className="shopingCart__productsList">
-            {basket.length > 0 &&
+            {localBasket.length > 0 &&
               sortedBasket.map((product) => (
                 <ShopingCartProduct
+                  key={product.id}
                   id={product.id}
                   title={product.title}
                   imgUrl={product.imgUrl}
                   rating={product.rating}
                   price={product.price}
+                  setLocalBasket={setLocalBasket}
+                  localBasket={localBasket}
                 />
               ))}
           </div>
-          {basket.length > 0 && (
+          {localBasket.length > 0 && (
             <h3 className="productsList__subTotal">
-              <span>Subtotal ({basket.length} items):</span>
+              <span>Subtotal ({localBasket.length} items):</span>
 
               <CurrencyFormat
                 decimalScale={2}
-                value={basketTotal(basket)}
+                value={basketTotal(localBasket)}
                 displayType={"text"}
                 thousandSeperator={true}
                 prefix={"$"}
@@ -80,7 +102,7 @@ const ShopingCart = () => {
           )}
         </div>
         <div className="shopingCart__right flexColumn">
-          <SubTotal numberOfItems={basket.length} basket={basket} />
+          <SubTotal numberOfItems={localBasket.length} basket={localBasket} />
         </div>
       </div>
     </div>
@@ -121,7 +143,9 @@ const SubTotal = ({ numberOfItems, basket }) => {
       />
       <Link
         onClick={setUserPendingState}
-        to={currentUser ? "checkout_address" : "user_authentication"}
+        to={
+          currentUser ? "/checkout/add-your-shipping-address" : "/auth/signin"
+        }
       >
         <button disabled={basket.length < 1}>Proceed to Checkout</button>
       </Link>
@@ -129,14 +153,43 @@ const SubTotal = ({ numberOfItems, basket }) => {
   );
 };
 
-const ShopingCartProduct = ({ id, title, rating, price, imgUrl }) => {
+const ShopingCartProduct = ({
+  id,
+  title,
+  rating,
+  price,
+  imgUrl,
+  setLocalBasket,
+  localBasket,
+}) => {
   const [{ basket }, dispatch] = useStateValue();
-
+  const [productQuantity, setProductQuantity] = useState(
+    localBasket.find((product) => product.id === id)?.qty
+  );
   const removeFromBasket = () => {
-    // Remove from from data layer by dispatching
     dispatch({
       type: "REMOVE_FROM_BASKET",
-      id: id,
+      payload: {
+        id: id,
+        setLocalBasket: setLocalBasket,
+        localBasket: localBasket,
+      },
+    });
+  };
+
+  const onQtyChange = (e) => {
+    setProductQuantity(e.target.value);
+    let alteredProduct = localBasket.find((product) => product.id === id);
+
+    alteredProduct.qty = parseFloat(e.target.value);
+
+    localStorage.setItem("basket", JSON.stringify(localBasket));
+
+    setLocalBasket(localBasket);
+
+    dispatch({
+      type: "UPDATE_BASKET_ON_QTY_CHANGE",
+      basket: localBasket,
     });
   };
 
@@ -152,6 +205,50 @@ const ShopingCartProduct = ({ id, title, rating, price, imgUrl }) => {
               <p>⭐</p>
             ))}
         </div>
+
+        <FormControl className="productQty__dropdown">
+          <span>Qty:</span>
+          <Select
+            className="productQty__select"
+            onChange={onQtyChange}
+            variant="outlined"
+            value={productQuantity}
+          >
+            <MenuItem className="menuItem" value="0">
+              0
+            </MenuItem>
+            <MenuItem className="menuItem" value="1">
+              1
+            </MenuItem>
+            <MenuItem className="menuItem" value="2">
+              2
+            </MenuItem>
+            <MenuItem className="menuItem" value="3">
+              3
+            </MenuItem>
+            <MenuItem className="menuItem" value="4">
+              4
+            </MenuItem>
+            <MenuItem className="menuItem" value="5">
+              5
+            </MenuItem>
+            <MenuItem className="menuItem" value="6">
+              6
+            </MenuItem>
+            <MenuItem className="menuItem" value="7">
+              7
+            </MenuItem>
+            <MenuItem className="menuItem" value="8">
+              8
+            </MenuItem>
+            <MenuItem className="menuItem" value="9">
+              9
+            </MenuItem>
+            <MenuItem className="menuItem" value="10">
+              10
+            </MenuItem>
+          </Select>
+        </FormControl>
         <div className="gift">
           <input type="checkbox" />
           <h3> This product is a gift</h3>

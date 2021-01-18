@@ -14,12 +14,19 @@ import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { auth, db } from "../Files/firebase";
 
-const Header = ({ displayName, countryName }) => {
+const Header = ({ displayName, countryName, basketItems }) => {
   const [{ basket, currentUser }, dispatch] = useStateValue();
+  const [localBasket, setLocalBasket] = useState(
+    JSON.parse(localStorage.getItem("basket"))
+  );
   const [vistorsDetails, setVisitorsDetails] = useState(null);
   const [listCurrentValue, setListCurrentValue] = useState("All");
   const [show, setShow] = useState(false);
   const [showLoginDropDown, setShowLoginDropDown] = useState(false);
+
+  useEffect(() => {
+    setLocalBasket(JSON.parse(localStorage.getItem("basket")));
+  }, [basket]);
 
   return (
     <div className="header flexRow between center">
@@ -28,15 +35,15 @@ const Header = ({ displayName, countryName }) => {
           <img src={AmazonLogo} alt="Amazon" />
         </Link>
 
-        {/* {vistorsDetails && ( */}
-        <div className="header__delivery flexRow">
-          <PersonPinCircle className="locationIcon" />
-          <div className="flexColumn center pointer">
-            <span className="headerNav__optionLineOne">Deliver to</span>
-            <span className="headerNav__optionLineTwo">{countryName}</span>
+        {countryName !== "" && (
+          <div className="header__delivery flexRow">
+            <PersonPinCircle className="locationIcon" />
+            <div className="flexColumn center pointer">
+              <span className="headerNav__optionLineOne">Deliver to</span>
+              <span className="headerNav__optionLineTwo">{countryName}</span>
+            </div>
           </div>
-        </div>
-        {/* )} */}
+        )}
       </div>
       <div className="header__search flexRow evenly center" id="header__search">
         <h3 onClick={() => setShow(!show)} className="headerSearch__listOpener">
@@ -95,7 +102,7 @@ const Header = ({ displayName, countryName }) => {
         <Link to="/cart" className="headerNav__basket pointer">
           <ShoppingBasket className="basketIcon" />
           <span className="headerNav__optionLineTwo basketCount">
-            {basket.length}
+            {basket.length > 0 ? basket.length : basketItems}
           </span>
         </Link>
       </div>
@@ -120,12 +127,12 @@ const LoginDropDown = () => {
         </div>
       ) : (
         <div className="loginDropDown__top flexColumn">
-          <Link to="user_authentication">
+          <Link to="/auth/signin">
             <button>Sign in</button>
           </Link>
           <div className="flexRow">
             <p className="newCustomer__text">New customer?</p>
-            <Link to="/user_registration" className="redirectLink">
+            <Link to="/auth/register" className="redirectLink">
               Start here
             </Link>
           </div>
@@ -157,51 +164,3 @@ const LoginDropDown = () => {
   );
 };
 export default Header;
-
-// useEffect(() => {
-//   const fetchDataFromDB = () => {
-//     const docRef = db.collection("users").doc(currentUser?.uid);
-
-//     docRef.get().then((doc) => {
-//       setFetchedData(doc.data());
-//       console.log("fetched user details", doc.data());
-
-//       dispatch({
-//         type: "SET_FETCHED_DETAILS",
-//         fetchedData: doc.data(),
-//       });
-//     });
-//   };
-
-//   fetchDataFromDB();
-// }, []);
-
-// useEffect(() => {
-//   setSecureData({
-//     displayName: fetchedData?.displayName,
-//     userID: fetchedData?.userID,
-//     email: fetchedData?.email,
-//   });
-// }, [fetchedData]);
-
-// useEffect(() => {
-//   localStorage.setItem("fetchedData", JSON.stringify(secureData));
-// }, [secureData]);
-
-// const [fetchedData, setFetchedData] = useState({});
-// const [secureData, setSecureData] = useState({});
-
-// useEffect(() => {
-//   const API_CALL_URL =
-//     "https://geolocation-db.com/json/8f12b5f0-2bc2-11eb-9444-076679b7aeb0";
-
-//   const getUserGeoLocationDetails = () => {
-//     fetch(API_CALL_URL)
-//       .then((response) => response.json())
-//       .then((data) => {
-//         setVisitorsDetails(data);
-//         console.log("This is visiting User Details =>", data);
-//       });
-//   };
-//   getUserGeoLocationDetails();
-// }, []);

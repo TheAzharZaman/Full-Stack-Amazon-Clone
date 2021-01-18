@@ -70,3 +70,9 @@
 .product > button:hover {
   background-color: #efbf47;
 }
+
+.product > button:disabled {
+  color: #303030;
+  background-color: #eff1f3;
+  border: 1px solid rgb(187, 187, 187);
+}

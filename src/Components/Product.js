@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Product.css";
 import useStateValue from "../Files/StateProvider";
 
 const Product = ({ id, title, price, imgUrl, rating }) => {
   const [{ basket }, dispatch] = useStateValue();
+  const [objectPresentInBasket, setObjectPresentInBasket] = useState(undefined);
+
+  useEffect(() => {
+    const tracedProduct = basket.find((product) => product.id === id);
+    setObjectPresentInBasket(tracedProduct);
+  }, [basket]);
 
   const addToBasket = () => {
     // Dispatch a product to the Data layer (in our case data layer is a basket)
@@ -16,6 +22,7 @@ const Product = ({ id, title, price, imgUrl, rating }) => {
         price: price,
         rating: rating,
         imgUrl: imgUrl,
+        qty: 1,
       },
     });
   };
@@ -38,7 +45,9 @@ const Product = ({ id, title, price, imgUrl, rating }) => {
       <div className="product__images">
         <img src={imgUrl} alt="Oops... Product images missing" />
       </div>
-      <button onClick={addToBasket}>Add to Basket</button>
+      <button disabled={objectPresentInBasket} onClick={addToBasket}>
+        {objectPresentInBasket ? "Added to Basket" : "Add to Basket"}
+      </button>
     </div>
   );
 };

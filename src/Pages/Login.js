@@ -21,7 +21,7 @@ const Login = () => {
       .then((authObj) => {
         if (authObj) {
           if (needToRedirectToCheckout) {
-            history.replace("/checkout_address");
+            history.replace("/checkout/add-your-shipping-address");
             dispatch({
               type: "SET_REDIRECT_TO_CHECKOUT",
               stateValue: false,

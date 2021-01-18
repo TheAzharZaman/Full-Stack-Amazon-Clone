@@ -8,7 +8,7 @@
 .checkout__content {
   width: 70%;
   margin-left: 13.5rem;
-  padding: 0.25rem 0 0 0;
+  padding: 4rem 0 0 0;
 }
 
 .checkoutHeader__steps {
@@ -204,13 +204,13 @@
   align-items: center !important;
 }
 
-.MuiOutlinedInput-input {
+.checkoutCountries__dropdown .MuiOutlinedInput-input {
   font-size: 15px !important;
   background-color: #edeff2 !important;
   padding: 8px 0.5rem 8px 0.85rem !important;
 }
 
-.MuiOutlinedInput-input:hover {
+.checkoutCountries__dropdown .MuiOutlinedInput-input:hover {
   background-color: #dfe2e7 !important;
 }
 

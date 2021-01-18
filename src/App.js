@@ -8,6 +8,7 @@ import ShopingCart from "./Pages/ShopingCart";
 import CheckoutAdress from "./Pages/CheckoutAddress";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import Copyright from "./Components/Copyright";
 import { auth, db } from "./Files/firebase";
 import useStateValue from "./Files/StateProvider";
 import Footer from "./Components/Footer";
@@ -16,13 +17,26 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutPayment from "./Pages/CheckoutPayment";
 
 const App = () => {
-  const [{ currentUser }, dispatch] = useStateValue();
+  const [{ currentUser, basket }, dispatch] = useStateValue();
   const [fetchedData, setFetchedData] = useState({});
   const [secureData, setSecureData] = useState({});
   const [user, setUser] = useState({});
   const [userLocDetails, setUserLocDetails] = useState();
+  const [localBasketAfterRefrsh, setLocalBasketAfterRefrsh] = useState();
 
   console.log("Current Logged In User =>>>", currentUser);
+
+  useEffect(() => {
+    if (basket?.length > 0) {
+      localStorage.setItem("basket", JSON.stringify(basket));
+    }
+  }, [basket]);
+
+  useEffect(() => {
+    if (basket?.length < 1) {
+      setLocalBasketAfterRefrsh(JSON.parse(localStorage.getItem("basket")));
+    }
+  }, [basket]);
 
   const promise = loadStripe(
     "pk_test_51I8N1gJHgoNdpJN9NedWNqHGlHGZRCcKRyvxG9eB4tmOmwU6KXjJFeKbxqUbpSbi1vmR5tKNqp4tUIcybLHbsdT600cmjwGy5m"
@@ -104,36 +118,49 @@ const App = () => {
     <Router>
       <div className="app">
         <Switch>
-          <Route path="/user_registration">
+          <Route path="/auth/register">
             <Signup />
           </Route>
-          <Route path="/user_authentication">
+          <Route path="/auth/signin">
             <Login />
           </Route>
-          <Route path="/checkout_payment">
+          <Route path="/checkout/payment-and-order-placement">
             <Elements stripe={promise}>
+              <Header
+                countryName={userLocDetails?.country_name}
+                displayName={fetchedData?.displayName}
+                basketItems={localBasketAfterRefrsh?.length}
+              />
               <CheckoutPayment />
             </Elements>
           </Route>
-          <Route path="/checkout_address">
+          <Route path="/checkout/add-your-shipping-address">
+            <Header
+              countryName={userLocDetails?.country_name}
+              displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
+            />
             <CheckoutAdress />
           </Route>
           <Route path="/cart">
             <Header
               countryName={userLocDetails?.country_name}
               displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
             />
             <HeaderSecondary />
             <ShopingCart />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Header
               countryName={userLocDetails?.country_name}
               displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
             />
             <HeaderSecondary />
             <Homepage />
             <Footer />
+            <Copyright />
           </Route>
         </Switch>
       </div>

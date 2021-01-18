@@ -10,7 +10,6 @@ import DoneIcon from "@material-ui/icons/Done";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import ProductsSlider from "../Components/ProductsSlider";
 import useStateValue from "../Files/StateProvider";
-import { Checkbox } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
 import CurrencyFormat from "react-currency-format";
@@ -132,7 +131,9 @@ const BasketLiveStatusBar = () => {
         </Link>
         <Link
           onClick={setUserPendingState}
-          to={currentUser ? "checkout_address" : "user_authentication"}
+          to={
+            currentUser ? "/checkout/add-your-shipping-address" : "/auth/signin"
+          }
         >
           <button className="checkout__btn">
             Proceed to Checkout({basket.length} items)

@@ -4,10 +4,10 @@ import "./Checkout.css";
 import { FormControl, Link, MenuItem, Select } from "@material-ui/core";
 import { db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const Checkout = () => {
-  const [{ currentUser, formState }, dispatch] = useStateValue();
+  const [{ currentUser }, dispatch] = useStateValue();
   const [countryNames, setCountryNames] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
     JSON.parse(localStorage.getItem("visitingUserLoc"))?.country_code
@@ -125,9 +125,9 @@ const Checkout = () => {
           },
           { merge: true }
         );
-      setRestMode(true);
+      // setRestMode(true);
 
-      history.push("checkout_payment");
+      history.push("/checkout/payment-and-order-placement");
     }
   };
 
@@ -144,10 +144,6 @@ const Checkout = () => {
   };
 
   const finalizeOrderAddress = async () => {
-    dispatch({
-      type: "SET_FORM_STATE",
-      state: false,
-    });
     setProcessing(true);
     await db
       .collection("users")
@@ -168,16 +164,12 @@ const Checkout = () => {
         { merge: true }
       );
 
-    history.push("checkout_payment");
+    history.push("/checkout/payment-and-order-placement");
 
     setProcessing(false);
   };
 
   const editOrderAddress = () => {
-    dispatch({
-      type: "SET_FORM_STATE",
-      state: true,
-    });
     setRestMode(false);
   };
 
@@ -257,106 +249,106 @@ const Checkout = () => {
               </div>
             )}
 
-            {formState && (
-              <form onSubmit={submitHandler} className="address__form">
-                <h3>Add a new address</h3>
-                <div className="address__input">
-                  <label>Country/Region*</label>
-                  <FormControl className="checkoutCountries__dropdown">
-                    <Select
-                      className="checkoutCountries__select"
-                      variant="outlined"
-                      value={selectedCountry}
-                      onChange={onCountryChange}
-                    >
-                      {countryNames.map((countryName) => (
-                        <MenuItem className="listItem" value={countryName.code}>
-                          <img
-                            className="dropdown__flag"
-                            src={countryName.flagSrc}
-                          />
-                          {countryName.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className="address__input">
-                  <label>Full name (First and Last name)*</label>
-                  <input
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder=""
-                    type="text"
-                  />
-                </div>
-                <div className="address__input">
-                  <label>Street Address*</label>
-                  <input
-                    value={addressPartOne}
-                    onChange={(e) => setAddressPartOne(e.target.value)}
-                    placeholder="Street address or P.O. Box"
-                    type="text"
-                  />
-                  <input
-                    value={addressPartTwo}
-                    onChange={(e) => setAddressPartTwo(e.target.value)}
-                    placeholder="Apt, suite, unit, building, floor, etc"
-                    style={{ marginTop: "5px" }}
-                    type="text"
-                  />
-                </div>
-                <div className="address__input">
-                  <label>City*</label>
-                  <input
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder=""
-                    type="text"
-                  />
-                </div>
-                <div className="address__input">
-                  <label>State/Province/Region*</label>
-                  <input
-                    value={province}
-                    onChange={(e) => setProvince(e.target.value)}
-                    type="text"
-                  />
-                </div>
-                <div className="address__input">
-                  <label>Zip Code*</label>
-                  <input
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                    type="text"
-                  />
-                </div>
-                <div className="address__input">
-                  <label>Phone No*</label>
-                  <input
-                    value={phoneNo}
-                    onChange={(e) => setPhoneNo(e.target.value)}
-                    type="text"
-                  />
-                </div>
-                <div className="address__inputDefault flexRow">
-                  <input
-                    value={addressMarkDefault}
-                    onChange={(e) => {
-                      setAddressMarkDefault(e.target.checked);
-                    }}
-                    type="checkbox"
-                  />
-                  <h3>Make this my default shipping address</h3>
-                </div>
+            {/* {formState && ( */}
+            <form onSubmit={submitHandler} className="address__form">
+              <h3>Add a new address</h3>
+              <div className="address__input">
+                <label>Country/Region*</label>
+                <FormControl className="checkoutCountries__dropdown">
+                  <Select
+                    className="checkoutCountries__select"
+                    variant="outlined"
+                    value={selectedCountry}
+                    onChange={onCountryChange}
+                  >
+                    {countryNames.map((countryName) => (
+                      <MenuItem className="listItem" value={countryName.code}>
+                        <img
+                          className="dropdown__flag"
+                          src={countryName.flagSrc}
+                        />
+                        {countryName.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="address__input">
+                <label>Full name (First and Last name)*</label>
                 <input
-                  className="address__submitBtn"
-                  type="submit"
-                  value={!restMode ? "Add this Address" : "Address added"}
-                  value={buttonStatesReturner()}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder=""
+                  type="text"
                 />
-              </form>
-            )}
+              </div>
+              <div className="address__input">
+                <label>Street Address*</label>
+                <input
+                  value={addressPartOne}
+                  onChange={(e) => setAddressPartOne(e.target.value)}
+                  placeholder="Street address or P.O. Box"
+                  type="text"
+                />
+                <input
+                  value={addressPartTwo}
+                  onChange={(e) => setAddressPartTwo(e.target.value)}
+                  placeholder="Apt, suite, unit, building, floor, etc"
+                  style={{ marginTop: "5px" }}
+                  type="text"
+                />
+              </div>
+              <div className="address__input">
+                <label>City*</label>
+                <input
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder=""
+                  type="text"
+                />
+              </div>
+              <div className="address__input">
+                <label>State/Province/Region*</label>
+                <input
+                  value={province}
+                  onChange={(e) => setProvince(e.target.value)}
+                  type="text"
+                />
+              </div>
+              <div className="address__input">
+                <label>Zip Code*</label>
+                <input
+                  value={zipCode}
+                  onChange={(e) => setZipCode(e.target.value)}
+                  type="text"
+                />
+              </div>
+              <div className="address__input">
+                <label>Phone No*</label>
+                <input
+                  value={phoneNo}
+                  onChange={(e) => setPhoneNo(e.target.value)}
+                  type="text"
+                />
+              </div>
+              <div className="address__inputDefault flexRow">
+                <input
+                  value={addressMarkDefault}
+                  onChange={(e) => {
+                    setAddressMarkDefault(e.target.checked);
+                  }}
+                  type="checkbox"
+                />
+                <h3>Make this my default shipping address</h3>
+              </div>
+              <input
+                className="address__submitBtn"
+                type="submit"
+                value={!restMode ? "Add this Address" : "Address added"}
+                value={buttonStatesReturner()}
+              />
+            </form>
+            {/* )} */}
           </div>
         </div>
       </div>

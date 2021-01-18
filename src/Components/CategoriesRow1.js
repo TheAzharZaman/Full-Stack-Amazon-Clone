@@ -42,7 +42,7 @@ const CategoriesRow = () => {
         <div className="signin__promotion flexColumn">
           <div className="signin flexColumn">
             <h3>Sign in for the best experience</h3>
-            <Link to="/user_authentication">
+            <Link to="/auth/signin">
               <button>Sign in securely</button>
             </Link>
           </div>

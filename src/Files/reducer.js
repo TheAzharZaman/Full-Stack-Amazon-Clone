@@ -5,11 +5,10 @@ const initialState = {
   currentUser: null,
   fetchedUserDetails: {},
   needToRedirectToCheckout: false,
-  formState: true,
 };
 
-const basketTotal = (basket) => {
-  return basket?.reduce((amount, item) => item.price + amount, 0);
+const basketTotal = (basket, extra) => {
+  return basket?.reduce((amount, item) => item.price * item.qty + amount, 0);
 };
 
 const reducer = (state, action) => {
@@ -21,19 +20,31 @@ const reducer = (state, action) => {
       };
 
     case "REMOVE_FROM_BASKET":
-      const itemIndexToBeRemoved = state.basket.findIndex(
-        (basketItemToBeRemoved) => basketItemToBeRemoved.id === action.id
+      // const itemIndexToBeRemoved = state.basket.findIndex(
+      //   (basketItemToBeRemoved) =>
+      //     basketItemToBeRemoved.id === action.payload.id
+      // );
+
+      // let newBasketAfterRemovingProduct = [...state.basket];
+
+      // if (itemIndexToBeRemoved >= 0) {
+      //   newBasketAfterRemovingProduct.splice(itemIndexToBeRemoved, 1);
+      // } else {
+      //   console.warn(
+      //     `Cannot Remove product (id: ${action.payload.id}), as it is not present in Basket`
+      //   );
+      // }
+
+      const newBasketAfterRemovingProduct = action.payload.localBasket.filter(
+        (product) => product.id !== action.payload.id
       );
 
-      let newBasketAfterRemovingProduct = [...state.basket];
+      localStorage.setItem(
+        "basket",
+        JSON.stringify(newBasketAfterRemovingProduct)
+      );
 
-      if (itemIndexToBeRemoved >= 0) {
-        newBasketAfterRemovingProduct.splice(itemIndexToBeRemoved, 1);
-      } else {
-        console.warn(
-          `Cannot Remove product (id: ${action.id}), as it is not present in Basket`
-        );
-      }
+      action.payload.setLocalBasket(newBasketAfterRemovingProduct);
 
       return {
         ...state,
@@ -72,15 +83,15 @@ const reducer = (state, action) => {
         ...state,
         formState: action.state,
       };
+
+    case "UPDATE_BASKET_ON_QTY_CHANGE":
+      return {
+        ...state,
+        basket: action.basket,
+      };
   }
 };
 
 export default reducer;
 
 export { initialState, basketTotal };
-
-// case "REMOVE_FROM_BASKET":
-// return {
-//   ...state,
-//   basket: state.basket.filter((item) => item.id !== action.id),
-// };

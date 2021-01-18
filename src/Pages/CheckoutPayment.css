@@ -1,0 +1,188 @@
+.checkout__payment {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 0 0 3rem;
+  background-color: white;
+}
+
+.checkoutHeader__paymentPage {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgb(231, 231, 231);
+}
+
+.checkoutHeader__paymentPage > p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #333333;
+  margin-left: 2px;
+  line-height: 19px;
+}
+
+.checkoutPayment__left {
+  flex: 0.5;
+}
+
+.checkoutPayment__cartOverview {
+  width: 88%;
+}
+
+.checkoutPayment__right {
+  flex: 0.5;
+}
+
+.extraMargin {
+  margin-top: 1.6rem;
+  margin-left: 1rem;
+}
+
+.alreadyPresent__address > h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 19px;
+  line-height: 21px;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+}
+
+/* Shoping Card Bsket Overview Styling */
+
+.checkout__productsList {
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.checkout__product {
+  padding: 0.85rem 1rem;
+  margin-right: 20px;
+  border-top: 1px solid rgb(221, 221, 221);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.checkout__product:last-child {
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.checkout__productImage {
+  width: 15.5%;
+}
+
+.checkout__productInfo {
+  margin-left: 1rem;
+}
+
+.checkout__productTitle {
+  font-weight: 400;
+  font-size: 13.5px;
+  letter-spacing: 0.2px;
+  width: 99%;
+  margin-top: 0.15rem;
+}
+
+.checkout__productPrice {
+  font-size: 15px;
+  color: rgb(37, 37, 37);
+  text-align: right;
+  flex: 1;
+  margin-top: 0.45rem;
+  margin-right: 2rem;
+}
+
+.checkoutProduct__controls {
+  align-items: baseline;
+}
+
+.checkoutProduct__qtyDropdown {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  margin: 1rem 0 0 !important;
+  width: 6rem !important;
+}
+
+.checkoutProduct__qtyDropdown > span {
+  margin-right: 0.6rem;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.checkoutProduct__qtySelect {
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+}
+
+.menuItem {
+  font-size: 13px !important;
+  font-weight: 300 !important;
+}
+
+.checkoutProduct__qtyDropdown .MuiOutlinedInput-input {
+  font-size: 15px !important;
+  background-color: #edeff2 !important;
+  padding-top: 5.5px !important;
+  padding-left: 8px !important;
+  padding-bottom: 5.5px !important;
+}
+
+.checkoutProduct__qtyDropdown .MuiOutlinedInput-input:hover {
+  background-color: #dfe2e7 !important;
+}
+/* Subtotal Section */
+
+.checkout__totalSection {
+  justify-content: space-between;
+  margin-top: 0.45rem;
+}
+
+.goToBasket {
+  font-weight: 300;
+  font-size: 13.5px;
+}
+
+.checkoutProductsList__subTotal {
+  /* text-align: right; */
+  margin-right: 0.35rem;
+}
+
+.checkoutProductsList__subTotal > span {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.checkoutProductsList__subTotal > strong {
+  color: rgb(37, 37, 37);
+  font-size: 17px;
+  letter-spacing: 0.3px;
+  margin-left: 0.35rem;
+}
+
+.checkoutProduct__removeButton {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #1196ab;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.checkoutProduct__removeButton:hover {
+  text-decoration: underline;
+}
+
+/* CHECKOUT PAYMENT SIDE STYLING */
+
+.checkoutPayment__right {
+  flex: 0.5;
+}
+
+.checkoutPayment__right h3 {
+  font-size: 90px;
+  font-weight: 800;
+  margin: 10.5rem 0 0 9.5rem;
+}
