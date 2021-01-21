@@ -18,4 +18,4 @@ ReactDOM.render(
   RootDirectory
 );
 
-serviceWorker.register();
+serviceWorker.unregister();

@@ -107,26 +107,6 @@ const Checkout = () => {
 
       setAddingState(false);
 
-      await db
-        .collection("users")
-        .doc(currentUser?.uid)
-        .set(
-          {
-            firstOrderAddress: {
-              country: selectedCountry,
-              fullName: fullName,
-              addressLineOne: addressPartOne,
-              addressLineTwo: addressPartTwo,
-              province: province,
-              city: city,
-              phoneNo: phoneNo,
-              zipCode: zipCode,
-            },
-          },
-          { merge: true }
-        );
-      // setRestMode(true);
-
       history.push("/checkout/payment-and-order-placement");
     }
   };
@@ -188,9 +168,7 @@ const Checkout = () => {
       <div className="checkout__content flexColumn">
         <div className="checkout__header flexColumn">
           <div className="checkoutHeader__steps flexRow">
-            <Link to="/">
-              <img src={AmazonLogo} alt="" />
-            </Link>
+            <img src={AmazonLogo} alt="" />
             <div className="header__steps flexRow">
               <h3 className="passed">LOGIN</h3>
               <h3 className="active">SHIPPING ADDRESS</h3>
@@ -239,7 +217,7 @@ const Checkout = () => {
                 <h3>Phone: {fetchedData?.address.phoneNo}</h3>
                 <div>
                   <button onClick={finalizeOrderAddress}>
-                    {processing ? "Processing" : "Deliver to this address"}
+                    {processing ? "Processing..." : "Deliver to this address"}
                   </button>
                   <div className="address__controls flexRow">
                     <button onClick={editOrderAddress}>Edit</button>
@@ -348,7 +326,6 @@ const Checkout = () => {
                 value={buttonStatesReturner()}
               />
             </form>
-            {/* )} */}
           </div>
         </div>
       </div>

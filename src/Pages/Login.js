@@ -90,7 +90,7 @@ const Login = () => {
             <h4>New to Amazon?</h4>
             <div className="tag_lines"></div>
           </div>
-          <Link to="user_registration">
+          <Link to="/auth/register">
             <button>Create your Amazon account</button>
           </Link>
         </div>

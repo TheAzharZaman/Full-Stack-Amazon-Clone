@@ -15,7 +15,7 @@
   align-items: center;
 }
 
-.checkoutHeader__steps > a > img {
+.checkoutHeader__steps > img {
   width: 115px;
   padding: 0.5rem 0;
 }

@@ -183,14 +183,23 @@ const ShopingCartProduct = ({
 
     alteredProduct.qty = parseFloat(e.target.value);
 
-    localStorage.setItem("basket", JSON.stringify(localBasket));
+    if (e.target.value > 0) {
+      localStorage.setItem("basket", JSON.stringify(localBasket));
 
-    setLocalBasket(localBasket);
-
-    dispatch({
-      type: "UPDATE_BASKET_ON_QTY_CHANGE",
-      basket: localBasket,
-    });
+      dispatch({
+        type: "UPDATE_BASKET_ON_QTY_CHANGE",
+        basket: localBasket,
+      });
+    } else {
+      dispatch({
+        type: "REMOVE_FROM_BASKET",
+        payload: {
+          id: id,
+          setLocalBasket: setLocalBasket,
+          localBasket: localBasket,
+        },
+      });
+    }
   };
 
   return (

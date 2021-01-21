@@ -56,7 +56,7 @@ const Product = ({
             </div>
           </div>
         )}
-        <Link className="redirectLink" to={redirectUrl}>
+        <Link className="redirectLink" to="/order-placed-notification">
           {linkText}
         </Link>
       </div>

@@ -15,6 +15,8 @@ import Footer from "./Components/Footer";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutPayment from "./Pages/CheckoutPayment";
+import OrderPlacedSuccssfully from "./Pages/OrderPlacedSuccssfully";
+import MyOrders from "./Pages/MyOrders";
 
 const App = () => {
   const [{ currentUser, basket }, dispatch] = useStateValue();
@@ -24,7 +26,7 @@ const App = () => {
   const [userLocDetails, setUserLocDetails] = useState();
   const [localBasketAfterRefrsh, setLocalBasketAfterRefrsh] = useState();
 
-  console.log("Current Logged In User =>>>", currentUser);
+  // console.log("Current Logged In User =>>>", currentUser);
 
   useEffect(() => {
     if (basket?.length > 0) {
@@ -118,39 +120,6 @@ const App = () => {
     <Router>
       <div className="app">
         <Switch>
-          <Route path="/auth/register">
-            <Signup />
-          </Route>
-          <Route path="/auth/signin">
-            <Login />
-          </Route>
-          <Route path="/checkout/payment-and-order-placement">
-            <Elements stripe={promise}>
-              <Header
-                countryName={userLocDetails?.country_name}
-                displayName={fetchedData?.displayName}
-                basketItems={localBasketAfterRefrsh?.length}
-              />
-              <CheckoutPayment />
-            </Elements>
-          </Route>
-          <Route path="/checkout/add-your-shipping-address">
-            <Header
-              countryName={userLocDetails?.country_name}
-              displayName={fetchedData?.displayName}
-              basketItems={localBasketAfterRefrsh?.length}
-            />
-            <CheckoutAdress />
-          </Route>
-          <Route path="/cart">
-            <Header
-              countryName={userLocDetails?.country_name}
-              displayName={fetchedData?.displayName}
-              basketItems={localBasketAfterRefrsh?.length}
-            />
-            <HeaderSecondary />
-            <ShopingCart />
-          </Route>
           <Route exact path="/">
             <Header
               countryName={userLocDetails?.country_name}
@@ -160,6 +129,64 @@ const App = () => {
             <HeaderSecondary />
             <Homepage />
             <Footer />
+            <Copyright />
+          </Route>
+          <Route path="/cart">
+            <Header
+              countryName={userLocDetails?.country_name}
+              displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
+            />
+
+            <HeaderSecondary />
+            <ShopingCart />
+            <Copyright />
+          </Route>
+          <Route path="/auth/register">
+            <Signup />
+            <Copyright />
+          </Route>
+          <Route path="/auth/signin">
+            <Login />
+            <Copyright />
+          </Route>
+          <Route path="/checkout/payment-and-order-placement">
+            <Elements stripe={promise}>
+              <Header
+                countryName={userLocDetails?.country_name}
+                displayName={fetchedData?.displayName}
+                basketItems={localBasketAfterRefrsh?.length}
+              />
+              <CheckoutPayment />
+              <Copyright />
+            </Elements>
+          </Route>
+          <Route path="/checkout/add-your-shipping-address">
+            <Header
+              countryName={userLocDetails?.country_name}
+              displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
+            />
+            <CheckoutAdress />
+            <Copyright />
+          </Route>
+          <Route path="/order-placed-notification">
+            <Header
+              countryName={userLocDetails?.country_name}
+              displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
+            />
+            <OrderPlacedSuccssfully />
+            <Copyright />
+          </Route>
+          <Route path="/account/my-orders">
+            <Header
+              countryName={userLocDetails?.country_name}
+              displayName={fetchedData?.displayName}
+              basketItems={localBasketAfterRefrsh?.length}
+            />
+            <HeaderSecondary />
+            <MyOrders />
             <Copyright />
           </Route>
         </Switch>

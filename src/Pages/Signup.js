@@ -38,25 +38,18 @@ const Signup = () => {
       .createUserWithEmailAndPassword(email, password)
       .then((userObj) => {
         console.log(userObj);
-        db.collection("users")
-          .doc(userObj?.user.uid)
-          .set({
-            userID: userObj?.user.uid,
-            displayName: displayName,
-            email: email,
-            accountPassword: password,
-            addressAdded: false,
-            addressMarkedAsDefault: false,
-            address: {},
-            ordersPlaced: 0,
-            ordersDrafted: 0,
-            ordersCancelled: 0,
-            reportsSubmitted: 0,
-            feedbacksGiven: {
-              total: 0,
-              feedbacks: {},
-            },
-          });
+        db.collection("users").doc(userObj?.user.uid).set({
+          userID: userObj?.user.uid,
+          displayName: displayName,
+          email: email,
+          accountPassword: password,
+          addressAdded: false,
+          addressMarkedAsDefault: false,
+          address: {},
+          ordersPlaced: 0,
+          ordersInDraft: 0,
+          orderCancelled: 0,
+        });
 
         if (userObj) {
           if (needToRedirectToCheckout) {
@@ -142,7 +135,7 @@ const Signup = () => {
 
           <h4 className="signup__haveanAccount">
             Already have an account?
-            <Link to="/user_authentication">Sign-In</Link>
+            <Link to="/auth/signin">Sign-In</Link>
           </h4>
         </form>
         <div className="box--shadow"></div>

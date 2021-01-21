@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import AmazonLogo from "./logo.png";
 import "./CheckoutPayment.css";
-import { Link } from "react-scroll";
 import { db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
 import { FormControl, MenuItem, Select } from "@material-ui/core";
+import ErrorIcon from "@material-ui/icons/Error";
 import CurrencyFormat from "react-currency-format";
 import { basketTotal } from "../Files/reducer";
+import {
+  CardExpiryElement,
+  CardNumberElement,
+  CardCvcElement,
+} from "@stripe/react-stripe-js";
+import firebase from "firebase";
 
 const CheckoutPayment = () => {
-  const [{ currentUser, basket }, dispatch] = useStateValue();
+  const [
+    { currentUser, basket, fetchedUserDetails },
+    dispatch,
+  ] = useStateValue();
   const [fetchedData, setFetchedData] = useState({});
   const [localBasket, setLocalBasket] = useState(
     localStorage.getItem("basket")
@@ -21,6 +30,13 @@ const CheckoutPayment = () => {
     false
   );
   const [sortedBasket, setSortedBasket] = useState([]);
+  const [termsOfUse, setTermsOfUse] = useState(false);
+  const [privacyNotice, setPrivacyNotice] = useState(false);
+  const [setOrderPlacedSuccesfully, setSetOrderPlacedSuccesfully] = useState(
+    false
+  );
+  const [processing, setProcessing] = useState(false);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -44,14 +60,81 @@ const CheckoutPayment = () => {
     setSortedBasket(sortBasket);
   }, [localBasket]);
 
+  const placeOrder = async () => {
+    console.log("Trying to place order");
+
+    if (termsOfUse) {
+      document
+        .getElementById("termsAndConditions__error")
+        .classList.remove("showTerms___errorIcon");
+    }
+
+    if (privacyNotice) {
+      document
+        .getElementById("privacyPolicy__error")
+        .classList.remove("showPrivacy___errorIcon");
+    }
+
+    if (!termsOfUse) {
+      document
+        .getElementById("termsAndConditions__error")
+        .classList.add("showTerms___errorIcon");
+    } else if (!privacyNotice) {
+      document
+        .getElementById("privacyPolicy__error")
+        .classList.add("showPrivacy___errorIcon");
+    } else {
+      setProcessing(true);
+
+      document
+        .getElementById("termsAndConditions__error")
+        .classList.remove("showTerms___errorIcon");
+      document
+        .getElementById("privacyPolicy__error")
+        .classList.remove("showPrivacy___errorIcon");
+
+      await db
+        .collection("users")
+        .doc(currentUser?.uid)
+        .collection("orders")
+        .doc(`${fetchedUserDetails?.ordersPlaced + 1}`)
+        .set({
+          address: fetchedData?.address,
+          cart: localBasket,
+          orderInfo: {
+            orderTotalAmountInDollers: basketTotal(localBasket),
+            orderTotalItems: localBasket.length,
+            orderNumber: fetchedUserDetails?.ordersPlaced + 1,
+            orderTimeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+          },
+        });
+
+      await db
+        .collection("users")
+        .doc(currentUser?.uid)
+        .set(
+          {
+            ordersPlaced: fetchedUserDetails?.ordersPlaced + 1,
+          },
+          { merge: true }
+        );
+      setProcessing(false);
+      dispatch({
+        type: "EMPTY_BASKET",
+        newBasket: [],
+      });
+      localStorage.removeItem("basket");
+      setLocalBasket([]);
+      history.push("/order-placed-notification");
+    }
+  };
+
   return (
     <div className="checkout__payment">
       <div className="checkout__content flexColumn">
         <div className="checkout__header flexColumn">
           <div className="checkoutHeader__steps flexRow">
-            <Link to="/">
-              <img src={AmazonLogo} alt="" />
-            </Link>
+            <img src={AmazonLogo} alt="" />
             <div className="header__steps flexRow">
               <h3 className="passed">LOGIN</h3>
               <h3 className="passed">SHIPPING ADDRESS</h3>
@@ -90,7 +173,13 @@ const CheckoutPayment = () => {
                   <h3>Phone: {fetchedData?.address.phoneNo}</h3>
                   <div>
                     <div className="address__controls flexRow">
-                      <button>Edit</button>
+                      <button
+                        onClick={() =>
+                          history.push("/checkout/add-your-shipping-address")
+                        }
+                      >
+                        Edit
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -134,7 +223,79 @@ const CheckoutPayment = () => {
             </div>
           </div>
           <div className="checkoutPayment__right">
-            <h3>Checkout</h3>
+            <h3>Please enter your Card details</h3>
+            <p>
+              As this is a demo app, no money will be deducted from your
+              account, or enter dummy account details with same pattern, then
+              click 'Place Order' button to recieve confirmation notificaton
+            </p>
+
+            {/* Card Inputs */}
+            <div className="cardDetails__inputs flexColumn">
+              <div className="cardInput cardNumber__input flexColumn">
+                <h4>Enter your Credit/Debit card number</h4>
+                <CardNumberElement />
+              </div>
+              <div className="cardCVExpiry__inputs flexRow">
+                <div className="cardInput cardExpiry__input flexColumn">
+                  <h4>Enter card expiry date</h4>
+                  <CardExpiryElement />
+                </div>
+                <div className="cardInput cardCvc__input flexColumn">
+                  <h4>Enter card Cvc </h4>
+                  <CardCvcElement />
+                </div>
+              </div>
+            </div>
+
+            {/* Terms And Conditions */}
+            <div className="aggrements">
+              <div className="terms__conditions flexRow" id="terms__conditions">
+                <input
+                  value={termsOfUse}
+                  onChange={(e) => setTermsOfUse(!termsOfUse)}
+                  type="checkbox"
+                />
+                <h3>
+                  I agree to
+                  <a
+                    className="mainHoverEffect"
+                    href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_register_notification_condition_of_use?ie=UTF8&nodeId=508088"
+                  >
+                    Conditions of use
+                  </a>
+                </h3>
+                <ErrorIcon
+                  className="errorIcon"
+                  id="termsAndConditions__error"
+                />
+              </div>
+              <div className="privacy__policy flexRow">
+                <input
+                  value={privacyNotice}
+                  onChange={(e) => setPrivacyNotice(!privacyNotice)}
+                  type="checkbox"
+                />
+                <h3>
+                  I agree to
+                  <a
+                    className="mainHoverEffect"
+                    href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_register_notification_privacy_notice?ie=UTF8&nodeId=468496"
+                  >
+                    Privacy notice
+                  </a>
+                </h3>
+                <ErrorIcon className="errorIcon" id="privacyPolicy__error" />
+              </div>
+            </div>
+
+            <button
+              disabled={processing}
+              className="placeOrder__btn"
+              onClick={placeOrder}
+            >
+              {processing ? "Processing..." : "Place Order"}
+            </button>
           </div>
         </div>
       </div>

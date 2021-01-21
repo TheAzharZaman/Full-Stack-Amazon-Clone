@@ -1,0 +1,32 @@
+.orderPlaced__page {
+  width: 100%;
+  height: 93vh;
+  display: grid;
+}
+
+.orderPlaced__card {
+  width: 20rem;
+  height: 16rem;
+  margin: 13rem auto 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.orderPlaced__card > svg {
+  font-size: 100px;
+  color: green;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.orderPlaced__card > .placedSuccess__tagline {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.orderPlaced__card > a {
+  font-size: 18px;
+  width: 100%;
+}

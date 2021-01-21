@@ -21,7 +21,7 @@
 }
 
 .checkoutPayment__left {
-  flex: 0.5;
+  flex: 0.55;
 }
 
 .checkoutPayment__cartOverview {
@@ -178,11 +178,91 @@
 /* CHECKOUT PAYMENT SIDE STYLING */
 
 .checkoutPayment__right {
-  flex: 0.5;
+  flex: 0.45;
+  margin-left: 7rem;
+  padding: 1.35rem 0 1rem;
 }
 
 .checkoutPayment__right h3 {
-  font-size: 90px;
-  font-weight: 800;
-  margin: 10.5rem 0 0 9.5rem;
+  font-size: 22px;
+  /* text-align: center; */
+}
+
+.checkoutPayment__right p {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+.cardDetails__inputs {
+  margin-top: 1rem;
+  /* margin-left: 2.5rem; */
+}
+
+.cardNumber__input,
+.cardCVExpiry__inputs {
+  margin-top: 1.5rem;
+}
+
+.cardInput > h4 {
+  font-size: 14px;
+  color: rgb(59, 59, 59);
+  margin-bottom: 0.5rem;
+}
+
+.placeOrder__btn {
+  background-color: #f1c657;
+  border-radius: 2px;
+  width: 60%;
+  height: 30px;
+  margin-top: 2rem;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+}
+
+.placeOrder__btn:hover {
+  background-color: #f0c14b;
+}
+
+.aggrements {
+  margin-top: 2rem;
+}
+
+.terms__conditions,
+.privacy__policy {
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.terms__conditions > h3,
+.privacy__policy > h3 {
+  font-size: 13px;
+  font-weight: 300;
+  margin-left: 7px;
+}
+
+.terms__conditions > h3 > a,
+.privacy__policy > h3 > a {
+  margin-left: 4px;
+}
+
+.cardCvc__input {
+  margin-left: 4rem;
+}
+
+.errorIcon {
+  color: red !important;
+  font-size: 20px !important;
+  margin-left: 10px;
+  display: none !important;
+}
+
+.showPrivacy___errorIcon {
+  display: block !important;
+}
+
+.showTerms___errorIcon {
+  display: block !important;
 }
