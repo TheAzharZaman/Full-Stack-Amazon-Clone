@@ -12,14 +12,18 @@ const HeroSection = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [sliderImages, setSliderImages] = useState([
     "https://i.ibb.co/xGMmmcx/1.jpg",
+    "https://i.ibb.co/h2P2BRR/Fuji-Tall-Hero-Beauty-v2-en-US-1x-CB429089975.jpg",
+    "https://i.ibb.co/rFShK06/AMZ-Associates-ACC-Banner-Evergreen-1500x600-v2-CB415565312.jpg",
     "https://i.ibb.co/72SvVHf/2.jpg",
     "https://i.ibb.co/RYdz0vj/3.jpg",
     "https://i.ibb.co/Zgbz8Ck/4.jpg",
-    "https://i.ibb.co/4MsGzNb/5.jpg",
   ]);
 
+  const firstSlideIndex = 0;
+  const lastSlideIndex = sliderImages.length - 1;
+
   function sliderImageSetter(arg) {
-    if (slideIndex >= 0 && slideIndex <= sliderImages.length - 1) {
+    if (slideIndex >= firstSlideIndex && slideIndex <= lastSlideIndex) {
       return arg[slideIndex];
     }
   }
@@ -27,20 +31,20 @@ const HeroSection = () => {
   // Dynamic Slider Controllers(Forward)
 
   function increment() {
-    if (slideIndex >= 0 && slideIndex <= 3) {
+    if (slideIndex >= firstSlideIndex && slideIndex < lastSlideIndex) {
       setSlideIndex((prevIndex) => prevIndex + 1);
     } else {
-      setSlideIndex(0);
+      setSlideIndex(firstSlideIndex);
     }
   }
 
   // Dynamic Slider Controllers(Backward)
 
   function decrement() {
-    if (slideIndex > 0 && sliderImages.length - 1) {
+    if (slideIndex > 0 && slideIndex <= lastSlideIndex) {
       setSlideIndex((prevIndex) => prevIndex - 1);
     } else {
-      setSlideIndex(sliderImages.length - 1);
+      setSlideIndex(lastSlideIndex);
     }
   }
 

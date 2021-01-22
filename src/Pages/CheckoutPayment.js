@@ -61,8 +61,6 @@ const CheckoutPayment = () => {
   }, [localBasket]);
 
   const placeOrder = async () => {
-    console.log("Trying to place order");
-
     if (termsOfUse) {
       document
         .getElementById("termsAndConditions__error")

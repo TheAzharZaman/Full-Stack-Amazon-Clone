@@ -150,9 +150,8 @@ const LoginDropDown = () => {
 
         <div className="loginDropDown__bottomRight flexColumn">
           <h3>Your account</h3>
-
           <a href="#">Account</a>
-          <a href="#">Orders</a>
+          <Link to="/account/my-orders">Orders</Link>
           <a href="#">Recommendations</a>
           <a href="#">Browsing history</a>
           <a href="#">Watch list</a>

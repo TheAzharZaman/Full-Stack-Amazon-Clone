@@ -26,8 +26,6 @@ const App = () => {
   const [userLocDetails, setUserLocDetails] = useState();
   const [localBasketAfterRefrsh, setLocalBasketAfterRefrsh] = useState();
 
-  // console.log("Current Logged In User =>>>", currentUser);
-
   useEffect(() => {
     if (basket?.length > 0) {
       localStorage.setItem("basket", JSON.stringify(basket));
@@ -67,10 +65,6 @@ const App = () => {
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("visitingUserLoc"))) {
       setUserLocDetails(JSON.parse(localStorage.getItem("visitingUserLoc")));
-      console.log(
-        "Visiting User Location Details",
-        JSON.parse(localStorage.getItem("visitingUserLoc"))
-      );
     } else {
       const getUserGeoLocationDetails = () => {
         fetch(

@@ -21,8 +21,6 @@ const MyOrders = () => {
       );
   }, [currentUser]);
 
-  console.log(orders);
-
   return (
     <div className="my__orders">
       <div className="myOrders__content">

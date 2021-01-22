@@ -37,7 +37,6 @@ const Signup = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userObj) => {
-        console.log(userObj);
         db.collection("users").doc(userObj?.user.uid).set({
           userID: userObj?.user.uid,
           displayName: displayName,

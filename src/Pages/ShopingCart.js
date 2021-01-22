@@ -19,14 +19,6 @@ const ShopingCart = () => {
   const [sortedBasket, setSortedBasket] = useState([]);
 
   useEffect(() => {
-    console.log("Current State basket", basket);
-  }, [basket]);
-
-  useEffect(() => {
-    console.log("Current Local basket", localBasket);
-  }, [localBasket]);
-
-  useEffect(() => {
     const sortBasket = () => {
       return localBasket.sort(
         (a, b) => parseFloat(b.price) - parseFloat(a.price)
