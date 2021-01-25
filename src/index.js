@@ -5,14 +5,18 @@ import "./index.css";
 import { StateProvider } from "./Files/StateProvider";
 import { initialState } from "./Files/reducer";
 import reducer from "./Files/reducer";
+import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
+import store from "./redux/store";
 
 let RootDirectory = document.getElementById("root");
 
 ReactDOM.render(
   <React.StrictMode>
     <StateProvider reducer={reducer} initialState={initialState}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </StateProvider>
   </React.StrictMode>,
   RootDirectory
