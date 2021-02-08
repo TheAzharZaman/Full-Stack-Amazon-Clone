@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
 import useStateValue from "../Files/StateProvider";
+import { ADD_TO_BASKET } from "../redux/slices/basketSlice";
+import { useDispatch } from "react-redux";
 
 const Product = ({ id, title, price, imgUrl, rating }) => {
+  const dispatchRedux = useDispatch();
   const [{ basket }, dispatch] = useStateValue();
   const [objectPresentInBasket, setObjectPresentInBasket] = useState(undefined);
 
@@ -11,7 +14,7 @@ const Product = ({ id, title, price, imgUrl, rating }) => {
     setObjectPresentInBasket(tracedProduct);
   }, [basket]);
 
-  const addToBasket = () => {
+  const addToBasketOrRemoveFromBasket = () => {
     // Dispatch a product to the Data layer (in our case data layer is a basket)
 
     dispatch({
@@ -25,6 +28,16 @@ const Product = ({ id, title, price, imgUrl, rating }) => {
         qty: 1,
       },
     });
+    dispatchRedux(
+      ADD_TO_BASKET({
+        id: id,
+        title: title,
+        price: price,
+        rating: rating,
+        imgUrl: imgUrl,
+        qty: 1,
+      })
+    );
   };
   return (
     <div className="product">
@@ -45,7 +58,10 @@ const Product = ({ id, title, price, imgUrl, rating }) => {
       <div className="product__images">
         <img src={imgUrl} alt="Oops... Product images missing" />
       </div>
-      <button disabled={objectPresentInBasket} onClick={addToBasket}>
+      <button
+        disabled={objectPresentInBasket}
+        onClick={addToBasketOrRemoveFromBasket}
+      >
         {objectPresentInBasket ? "Added to Basket" : "Add to Basket"}
       </button>
     </div>

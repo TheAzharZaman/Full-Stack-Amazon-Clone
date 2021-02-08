@@ -51,7 +51,13 @@
   background-color: white;
   padding: 1rem 1.3rem;
   margin-right: 1rem;
+  transition: box-shadow 0.2s;
+  box-shadow: 0.65px 0.65px 5px 0px rgba(0, 0, 0, 0.1);
 }
+
+/* .category:hover {
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.2);
+} */
 
 .categoty__title {
   margin-top: 0.5rem;

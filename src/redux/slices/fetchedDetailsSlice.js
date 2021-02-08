@@ -7,7 +7,10 @@ export const fetchedUserDetailsSlice = createSlice({
   },
   reducers: {
     SET_FETCHED_DETAILS: (state, action) => {
-      state = action.payload;
+      return {
+        ...state,
+        fetchedUserDetails: action.payload,
+      };
     },
   },
 });

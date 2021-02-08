@@ -3,6 +3,8 @@ import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
+import { useSelector } from "react-redux";
+import { selectFetchedUserDetails } from "../redux/slices/fetchedDetailsSlice";
 
 const Product = ({
   categotyTitle,
@@ -22,7 +24,7 @@ const Product = ({
   specialBlocksCat,
   specialBlocksCatTitle,
 }) => {
-  const [{ fetchedUserDetails }] = useStateValue();
+  const fetchedUserDetails = useSelector(selectFetchedUserDetails);
 
   return (
     <div className={`category ${row2CategoryClass && "row2__category"}`}>

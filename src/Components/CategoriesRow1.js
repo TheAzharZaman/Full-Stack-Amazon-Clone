@@ -2,8 +2,11 @@ import React from "react";
 import Category from "./Category";
 import { Link } from "react-router-dom";
 import useStateValue from "../Files/StateProvider";
+import { selectUser } from "../redux/slices/userSlice";
+import { useSelector } from "react-redux";
 
 const CategoriesRow = () => {
+  // const currentUser = useSelector(selectUser);
   const [{ currentUser }, dispatch] = useStateValue();
 
   return (

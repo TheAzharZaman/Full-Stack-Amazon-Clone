@@ -10,12 +10,16 @@ import DoneIcon from "@material-ui/icons/Done";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import ProductsSlider from "../Components/ProductsSlider";
 import useStateValue from "../Files/StateProvider";
+import CurrencyFormat from "react-currency-format";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
-import CurrencyFormat from "react-currency-format";
+import { SET_REDIRECT_TO_CHECKOUT } from "../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectBasket } from "../redux/slices/basketSlice";
 
 const Homepage = () => {
-  const [{ basket, currentUser }] = useStateValue();
+  const basket = useSelector(selectBasket);
+  // const [{ basket, currentUser }] = useStateValue();
 
   return (
     <div className="home">
@@ -86,14 +90,14 @@ const Homepage = () => {
 };
 
 const BasketLiveStatusBar = () => {
-  const [{ basket, currentUser }, dispatch] = useStateValue();
+  const basket = useSelector(selectBasket);
+
+  const dispatchRedux = useDispatch();
+  const [{ currentUser }] = useStateValue();
 
   const setUserPendingState = () => {
     if (!currentUser) {
-      dispatch({
-        type: "SET_REDIRECT_TO_CHECKOUT",
-        stateValue: true,
-      });
+      dispatchRedux(SET_REDIRECT_TO_CHECKOUT(true));
     }
   };
 

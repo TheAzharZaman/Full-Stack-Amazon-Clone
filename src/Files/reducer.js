@@ -3,8 +3,6 @@
 const initialState = {
   basket: [],
   currentUser: null,
-  fetchedUserDetails: {},
-  needToRedirectToCheckout: false,
 };
 
 const basketTotal = (basket, extra) => {
@@ -60,22 +58,10 @@ const reducer = (state, action) => {
         basket: action.newBasket,
       };
 
-    case "SET_USER":
+    case "SET_USERR":
       return {
         ...state,
         currentUser: action.user,
-      };
-
-    case "SET_FETCHED_DETAILS":
-      return {
-        ...state,
-        fetchedUserDetails: action.fetchedData,
-      };
-
-    case "SET_REDIRECT_TO_CHECKOUT":
-      return {
-        ...state,
-        needToRedirectToCheckout: action.stateValue,
       };
 
     case "SET_FORM_STATE":

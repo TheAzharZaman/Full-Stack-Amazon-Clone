@@ -14,12 +14,15 @@ import {
   CardCvcElement,
 } from "@stripe/react-stripe-js";
 import firebase from "firebase";
+import { useSelector } from "react-redux";
+import { selectFetchedUserDetails } from "../redux/slices/fetchedDetailsSlice";
+import { selectUser } from "../redux/slices/userSlice";
 
 const CheckoutPayment = () => {
-  const [
-    { currentUser, basket, fetchedUserDetails },
-    dispatch,
-  ] = useStateValue();
+  // const currentUser = useSelector(selectUser);
+
+  const fetchedUserDetails = useSelector(selectFetchedUserDetails);
+  const [{ currentUser, basket }, dispatch] = useStateValue();
   const [fetchedData, setFetchedData] = useState({});
   const [localBasket, setLocalBasket] = useState(
     localStorage.getItem("basket")

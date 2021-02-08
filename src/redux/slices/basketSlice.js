@@ -7,9 +7,10 @@ export const basketSlice = createSlice({
   },
   reducers: {
     ADD_TO_BASKET: (state, action) => {
+      console.log(action.payload);
       return {
         ...state,
-        basket: [...state.basket, action.item],
+        basket: [...state.basket, action.payload],
       };
     },
 
@@ -30,10 +31,27 @@ export const basketSlice = createSlice({
         basket: newBasketAfterRemovingProduct,
       };
     },
+    EMPTY_BASKET: (state, action) => {
+      return {
+        ...state,
+        basket: action.payload,
+      };
+    },
+    UPDATE_BASKET_ON_QTY_CHANGE: (state, action) => {
+      return {
+        ...state,
+        basket: action.payload,
+      };
+    },
   },
 });
 
-export const { ADD_TO_BASKET, REMOVE_FROM_BASKET } = basketSlice.actions;
+export const {
+  ADD_TO_BASKET,
+  REMOVE_FROM_BASKET,
+  EMPTY_BASKET,
+  UPDATE_BASKET_ON_QTY_CHANGE,
+} = basketSlice.actions;
 
 export const selectBasket = (state) => state.basketStore.basket;
 

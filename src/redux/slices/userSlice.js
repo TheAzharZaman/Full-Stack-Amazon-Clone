@@ -16,7 +16,7 @@ export const userSlice = createSlice({
     SET_REDIRECT_TO_CHECKOUT: (state, action) => {
       return {
         ...state,
-        needToRedirectToCheckout: action.stateValue,
+        needToRedirectToCheckout: action.payload,
       };
     },
   },

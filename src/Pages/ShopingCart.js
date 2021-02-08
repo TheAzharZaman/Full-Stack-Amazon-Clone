@@ -2,19 +2,25 @@ import React, { useState, useEffect } from "react";
 import "./ShopingCart.css";
 import "../Components/Product.css";
 import CurrencyFormat from "react-currency-format";
-import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { basketTotal } from "../Files/reducer";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
 import { FormControl, MenuItem, Select } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import { REMOVE_FROM_BASKET, selectBasket } from "../redux/slices/basketSlice";
+import { SET_REDIRECT_TO_CHECKOUT } from "../redux/slices/userSlice";
+import { selectUser } from "../redux/slices/userSlice";
+import useStateValue from "../Files/StateProvider";
 
 const ShopingCart = () => {
-  const [{ basket, currentUser }, dispatch] = useStateValue();
+  const basket = useSelector(selectBasket);
+  const [{}, dispatch] = useStateValue();
   const [localBasket, setLocalBasket] = useState(
     localStorage.getItem("basket")
       ? JSON.parse(localStorage.getItem("basket"))
       : basket
   );
+  // const [localBasket, setLocalBasket] = useState(basket);
 
   const [sortedBasket, setSortedBasket] = useState([]);
 
@@ -44,7 +50,7 @@ const ShopingCart = () => {
           <div className="shopingCart__leftHeader flexRow">
             <div>
               <span class="shopingCart__emptyTagline">Shopping Cart</span>
-              {localBasket.length > 0 && (
+              {localBasket?.length > 0 && (
                 <h3
                   onClick={emptyCart}
                   className="shopingCart__deselectAll mainHoverEffect"
@@ -52,7 +58,7 @@ const ShopingCart = () => {
                   Deselect all items
                 </h3>
               )}
-              {localBasket.length < 1 && (
+              {localBasket?.length < 1 && (
                 <div className="shopingCart__emptyReturnBox">
                   <h5>Please return to products page to select something</h5>
                   <Link to="/">
@@ -61,11 +67,11 @@ const ShopingCart = () => {
                 </div>
               )}
             </div>
-            {localBasket.length > 0 && <h3>Price</h3>}
+            {localBasket?.length > 0 && <h3>Price</h3>}
           </div>
           <div className="shopingCart__productsList">
-            {localBasket.length > 0 &&
-              sortedBasket.map((product) => (
+            {localBasket?.length > 0 &&
+              localBasket.map((product) => (
                 <ShopingCartProduct
                   key={product.id}
                   id={product.id}
@@ -78,7 +84,7 @@ const ShopingCart = () => {
                 />
               ))}
           </div>
-          {localBasket.length > 0 && (
+          {localBasket?.length > 0 && (
             <h3 className="productsList__subTotal">
               <span>Subtotal ({localBasket.length} items):</span>
 
@@ -94,7 +100,7 @@ const ShopingCart = () => {
           )}
         </div>
         <div className="shopingCart__right flexColumn">
-          <SubTotal numberOfItems={localBasket.length} basket={localBasket} />
+          <SubTotal numberOfItems={localBasket?.length} basket={localBasket} />
         </div>
       </div>
     </div>
@@ -102,14 +108,14 @@ const ShopingCart = () => {
 };
 
 const SubTotal = ({ numberOfItems, basket }) => {
+  const dispatchRedux = useDispatch();
+  // const currentUser = useSelector(selectUser);
+
   const [{ currentUser }, dispatch] = useStateValue();
 
   const setUserPendingState = () => {
     if (!currentUser) {
-      dispatch({
-        type: "SET_REDIRECT_TO_CHECKOUT",
-        stateValue: true,
-      });
+      dispatchRedux(SET_REDIRECT_TO_CHECKOUT(true));
     }
   };
 
@@ -154,19 +160,28 @@ const ShopingCartProduct = ({
   setLocalBasket,
   localBasket,
 }) => {
+  const dispatchRedux = useDispatch();
+
   const [{ basket }, dispatch] = useStateValue();
   const [productQuantity, setProductQuantity] = useState(
     localBasket.find((product) => product.id === id)?.qty
   );
   const removeFromBasket = () => {
-    dispatch({
-      type: "REMOVE_FROM_BASKET",
-      payload: {
+    dispatchRedux(
+      REMOVE_FROM_BASKET({
         id: id,
         setLocalBasket: setLocalBasket,
         localBasket: localBasket,
-      },
-    });
+      })
+    );
+    // dispatch({
+    //   type: "REMOVE_FROM_BASKET",
+    //   payload: {
+    //     id: id,
+    //     setLocalBasket: setLocalBasket,
+    //     localBasket: localBasket,
+    //   },
+    // });
   };
 
   const onQtyChange = (e) => {

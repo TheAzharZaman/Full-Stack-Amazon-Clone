@@ -13,6 +13,8 @@ import Dropdown from "./Dropdown";
 import useStateValue from "../Files/StateProvider";
 import { Link } from "react-router-dom";
 import { auth, db } from "../Files/firebase";
+import { selectUser } from "../redux/slices/userSlice";
+import { useSelector } from "react-redux";
 
 const Header = ({ displayName, countryName, basketItems }) => {
   const [{ basket, currentUser }, dispatch] = useStateValue();
@@ -111,6 +113,7 @@ const Header = ({ displayName, countryName, basketItems }) => {
 };
 
 const LoginDropDown = () => {
+  // const currentUser = useSelector(selectUser);
   const [{ currentUser }, dispatch] = useStateValue();
 
   const signoutHandler = () => {

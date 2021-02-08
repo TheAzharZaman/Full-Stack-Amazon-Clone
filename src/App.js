@@ -8,7 +8,6 @@ import ShopingCart from "./Pages/ShopingCart";
 import CheckoutAdress from "./Pages/CheckoutAddress";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import Copyright from "./Components/Copyright";
 import { auth, db } from "./Files/firebase";
 import useStateValue from "./Files/StateProvider";
 import Footer from "./Components/Footer";
@@ -17,14 +16,22 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutPayment from "./Pages/CheckoutPayment";
 import OrderPlacedSuccssfully from "./Pages/OrderPlacedSuccssfully";
 import MyOrders from "./Pages/MyOrders";
+import { useSelector, useDispatch } from "react-redux";
+import { SET_FETCHED_DETAILS } from "./redux/slices/fetchedDetailsSlice";
+import { selectBasket } from "./redux/slices/basketSlice";
+// import Copyright from "./Components/Copyright";
 
 const App = () => {
-  const [{ currentUser, basket }, dispatch] = useStateValue();
+  // const basket = useSelector(selectBasket);
+  const dispatchRedux = useDispatch();
+  const [{ basket }, dispatch] = useStateValue();
   const [fetchedData, setFetchedData] = useState({});
   const [secureData, setSecureData] = useState({});
   const [user, setUser] = useState({});
   const [userLocDetails, setUserLocDetails] = useState();
   const [localBasketAfterRefrsh, setLocalBasketAfterRefrsh] = useState();
+
+  console.log(basket);
 
   useEffect(() => {
     if (basket?.length > 0) {
@@ -47,15 +54,20 @@ const App = () => {
       if (userObj) {
         setUser(userObj);
         dispatch({
-          type: "SET_USER",
+          type: "SET_USERR",
           user: userObj,
         });
+        // const modUser = {
+        //   uid: userObj?.uid,
+        // }
+        // dispatchRedux(SET_USER(userObj));
         localStorage.setItem("userID", userObj?.uid);
       } else {
         dispatch({
-          type: "SET_USER",
+          type: "SET_USERR",
           user: null,
         });
+        // dispatchRedux(SET_USER(null));
       }
     });
   }, []);
@@ -88,10 +100,7 @@ const App = () => {
 
       docRef.get().then((doc) => {
         setFetchedData(doc.data());
-        dispatch({
-          type: "SET_FETCHED_DETAILS",
-          fetchedData: doc.data(),
-        });
+        dispatchRedux(SET_FETCHED_DETAILS(doc.data()));
       });
     };
 
@@ -123,7 +132,7 @@ const App = () => {
             <HeaderSecondary />
             <Homepage />
             <Footer />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
           <Route path="/cart">
             <Header
@@ -134,15 +143,15 @@ const App = () => {
 
             <HeaderSecondary />
             <ShopingCart />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
           <Route path="/auth/register">
             <Signup />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
           <Route path="/auth/signin">
             <Login />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
           <Route path="/checkout/payment-and-order-placement">
             <Elements stripe={promise}>
@@ -152,7 +161,7 @@ const App = () => {
                 basketItems={localBasketAfterRefrsh?.length}
               />
               <CheckoutPayment />
-              <Copyright />
+              {/* <Copyright /> */}
             </Elements>
           </Route>
           <Route path="/checkout/add-your-shipping-address">
@@ -162,7 +171,7 @@ const App = () => {
               basketItems={localBasketAfterRefrsh?.length}
             />
             <CheckoutAdress />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
           <Route path="/order-placed-notification">
             <Header
@@ -171,7 +180,7 @@ const App = () => {
               basketItems={localBasketAfterRefrsh?.length}
             />
             <OrderPlacedSuccssfully />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
           <Route path="/account/my-orders">
             <Header
@@ -181,7 +190,7 @@ const App = () => {
             />
             <HeaderSecondary />
             <MyOrders />
-            <Copyright />
+            {/* <Copyright /> */}
           </Route>
         </Switch>
       </div>

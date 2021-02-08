@@ -5,9 +5,16 @@ import { Link, useHistory } from "react-router-dom";
 import AuthFooter from "../Components/AuthFooter";
 import { auth } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
+import {
+  selectRedirectToCheckout,
+  SET_REDIRECT_TO_CHECKOUT,
+} from "../redux/slices/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const Login = () => {
-  const [{ needToRedirectToCheckout }, dispatch] = useStateValue();
+  const dispatchRedux = useDispatch();
+  const needToRedirectToCheckout = useSelector(selectRedirectToCheckout);
+  const [{}, dispatch] = useStateValue();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,10 +29,7 @@ const Login = () => {
         if (authObj) {
           if (needToRedirectToCheckout) {
             history.replace("/checkout/add-your-shipping-address");
-            dispatch({
-              type: "SET_REDIRECT_TO_CHECKOUT",
-              stateValue: false,
-            });
+            dispatchRedux(SET_REDIRECT_TO_CHECKOUT(false));
           } else {
             history.replace("/");
           }

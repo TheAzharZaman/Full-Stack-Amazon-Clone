@@ -5,8 +5,12 @@ import { FormControl, Link, MenuItem, Select } from "@material-ui/core";
 import { db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
 import { Redirect, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/slices/userSlice";
 
 const Checkout = () => {
+  // const currentUser = useSelector(selectUser);
+
   const [{ currentUser }, dispatch] = useStateValue();
   const [countryNames, setCountryNames] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(

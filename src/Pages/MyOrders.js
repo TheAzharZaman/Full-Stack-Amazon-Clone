@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { db } from "../Files/firebase";
 import useStateValue from "../Files/StateProvider";
 import "./MyOrders.css";
+import { selectUser } from "../redux/slices/userSlice";
+import { useSelector } from "react-redux";
 
 const MyOrders = () => {
+  // const currentUser = useSelector(selectUser);
+
   const [{ currentUser }] = useStateValue();
   const [orders, setOrders] = useState();
 
