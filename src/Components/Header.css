@@ -1,12 +1,13 @@
 .header {
   width: 100%;
-  background-color: #131921;
   padding: 0.15rem 0.5rem;
   color: white;
   position: fixed;
   top: 0;
   z-index: 111111;
-  height: 55px;
+  height: 58px;
+  background-color: #131921;
+  align-items: center;
 }
 
 /* Header Logo Section */
@@ -131,8 +132,6 @@
   color: white;
   background-color: rgb(38, 138, 231);
 }
-
-/*  */
 
 .header__search > input {
   flex: 1;

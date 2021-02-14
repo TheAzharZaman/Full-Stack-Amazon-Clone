@@ -15,9 +15,12 @@ import { Link } from "react-router-dom";
 import { auth, db } from "../Files/firebase";
 import { selectUser } from "../redux/slices/userSlice";
 import { useSelector } from "react-redux";
+import { selectBasket } from "../redux/slices/basketSlice";
 
 const Header = ({ displayName, countryName, basketItems }) => {
-  const [{ basket, currentUser }, dispatch] = useStateValue();
+  const currentUser = useSelector(selectUser);
+  const [{ basket }] = useStateValue();
+
   const [localBasket, setLocalBasket] = useState(
     JSON.parse(localStorage.getItem("basket"))
   );
@@ -113,8 +116,7 @@ const Header = ({ displayName, countryName, basketItems }) => {
 };
 
 const LoginDropDown = () => {
-  // const currentUser = useSelector(selectUser);
-  const [{ currentUser }, dispatch] = useStateValue();
+  const currentUser = useSelector(selectUser);
 
   const signoutHandler = () => {
     auth.signOut();

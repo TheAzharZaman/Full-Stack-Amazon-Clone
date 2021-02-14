@@ -6,8 +6,7 @@ import { selectUser } from "../redux/slices/userSlice";
 import { useSelector } from "react-redux";
 
 const CategoriesRow = () => {
-  // const currentUser = useSelector(selectUser);
-  const [{ currentUser }, dispatch] = useStateValue();
+  const currentUser = useSelector(selectUser);
 
   return (
     <div className="categories__row categories__row1 flexRow between">

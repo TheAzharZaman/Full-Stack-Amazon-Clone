@@ -42,17 +42,12 @@
   cursor: pointer;
 }
 
-.shopingCart__emptyReturnBox {
-  border: 1px solid lightgray;
-  margin-top: 2.5rem;
-  padding: 1rem 1rem 0;
-  width: 80%;
-  border-radius: 3px;
-  background-color: #f3f3f3;
+.shopingCart__emptyStatus {
+  margin-top: 1rem;
+  margin-left: 0.5rem;
 }
 
-.shopingCart__emptyReturnBox > h5 {
-  /* font-weight: 400; */
+.shopingCart__emptyStatus > h3 {
   font-size: 15.5px;
   color: rgb(77, 76, 76);
 }

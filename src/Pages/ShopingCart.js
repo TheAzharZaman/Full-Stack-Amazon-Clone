@@ -13,8 +13,8 @@ import { selectUser } from "../redux/slices/userSlice";
 import useStateValue from "../Files/StateProvider";
 
 const ShopingCart = () => {
-  const basket = useSelector(selectBasket);
-  const [{}, dispatch] = useStateValue();
+  // const basket = useSelector(selectBasket);
+  const [{ basket }, dispatch] = useStateValue();
   const [localBasket, setLocalBasket] = useState(
     localStorage.getItem("basket")
       ? JSON.parse(localStorage.getItem("basket"))
@@ -49,7 +49,11 @@ const ShopingCart = () => {
         <div className="shopingCart__left flexColumn">
           <div className="shopingCart__leftHeader flexRow">
             <div>
-              <span class="shopingCart__emptyTagline">Shopping Cart</span>
+              <span class="shopingCart__emptyTagline">
+                {localBasket?.length < 1
+                  ? "Your Shopping Cart is empty"
+                  : "Shoping Cart"}
+              </span>
               {localBasket?.length > 0 && (
                 <h3
                   onClick={emptyCart}
@@ -59,11 +63,10 @@ const ShopingCart = () => {
                 </h3>
               )}
               {localBasket?.length < 1 && (
-                <div className="shopingCart__emptyReturnBox">
-                  <h5>Please return to products page to select something</h5>
-                  <Link to="/">
-                    <KeyboardReturnIcon />
-                  </Link>
+                <div className="shopingCart__emptyStatus">
+                  <h3>
+                    Return to products <Link to="/"> page</Link>
+                  </h3>
                 </div>
               )}
             </div>
@@ -109,9 +112,7 @@ const ShopingCart = () => {
 
 const SubTotal = ({ numberOfItems, basket }) => {
   const dispatchRedux = useDispatch();
-  // const currentUser = useSelector(selectUser);
-
-  const [{ currentUser }, dispatch] = useStateValue();
+  const currentUser = useSelector(selectUser);
 
   const setUserPendingState = () => {
     if (!currentUser) {

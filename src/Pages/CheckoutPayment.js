@@ -19,10 +19,9 @@ import { selectFetchedUserDetails } from "../redux/slices/fetchedDetailsSlice";
 import { selectUser } from "../redux/slices/userSlice";
 
 const CheckoutPayment = () => {
-  // const currentUser = useSelector(selectUser);
-
+  const currentUser = useSelector(selectUser);
   const fetchedUserDetails = useSelector(selectFetchedUserDetails);
-  const [{ currentUser, basket }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const [fetchedData, setFetchedData] = useState({});
   const [localBasket, setLocalBasket] = useState(
     localStorage.getItem("basket")

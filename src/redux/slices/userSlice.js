@@ -25,7 +25,6 @@ export const userSlice = createSlice({
 export const { SET_USER, SET_REDIRECT_TO_CHECKOUT } = userSlice.actions;
 
 export const selectUser = (state) => state.userStore.currentUser;
-
 export const selectRedirectToCheckout = (state) =>
   state.userStore.needToRedirectToCheckout;
 

@@ -6,9 +6,7 @@ import { selectUser } from "../redux/slices/userSlice";
 import { useSelector } from "react-redux";
 
 const MyOrders = () => {
-  // const currentUser = useSelector(selectUser);
-
-  const [{ currentUser }] = useStateValue();
+  const currentUser = useSelector(selectUser);
   const [orders, setOrders] = useState();
 
   useEffect(() => {

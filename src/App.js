@@ -19,19 +19,18 @@ import MyOrders from "./Pages/MyOrders";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_FETCHED_DETAILS } from "./redux/slices/fetchedDetailsSlice";
 import { selectBasket } from "./redux/slices/basketSlice";
+import { SET_USER } from "./redux/slices/userSlice";
 // import Copyright from "./Components/Copyright";
 
 const App = () => {
   // const basket = useSelector(selectBasket);
-  const dispatchRedux = useDispatch();
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket }] = useStateValue();
+  const dispatch = useDispatch();
   const [fetchedData, setFetchedData] = useState({});
   const [secureData, setSecureData] = useState({});
   const [user, setUser] = useState({});
   const [userLocDetails, setUserLocDetails] = useState();
   const [localBasketAfterRefrsh, setLocalBasketAfterRefrsh] = useState();
-
-  console.log(basket);
 
   useEffect(() => {
     if (basket?.length > 0) {
@@ -53,21 +52,17 @@ const App = () => {
     auth.onAuthStateChanged((userObj) => {
       if (userObj) {
         setUser(userObj);
-        dispatch({
-          type: "SET_USERR",
-          user: userObj,
-        });
-        // const modUser = {
-        //   uid: userObj?.uid,
-        // }
-        // dispatchRedux(SET_USER(userObj));
-        localStorage.setItem("userID", userObj?.uid);
+        dispatch(
+          SET_USER({
+            uid: userObj.uid,
+            email: userObj.email,
+            displayName: userObj.displayName,
+            emailVerified: userObj.emailVerified,
+          })
+        );
+        localStorage.setItem("userID", userObj.uid);
       } else {
-        dispatch({
-          type: "SET_USERR",
-          user: null,
-        });
-        // dispatchRedux(SET_USER(null));
+        dispatch(SET_USER(null));
       }
     });
   }, []);
@@ -100,7 +95,7 @@ const App = () => {
 
       docRef.get().then((doc) => {
         setFetchedData(doc.data());
-        dispatchRedux(SET_FETCHED_DETAILS(doc.data()));
+        dispatch(SET_FETCHED_DETAILS(doc.data()));
       });
     };
 
